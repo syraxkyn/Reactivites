@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { Activity, ActivityFormValues } from '../models/activity';
+import { Post, PostFormValues } from '../models/post';
 import { toast } from 'react-toastify';
 import { router } from '../router/Router';
 import { store } from '../stores/store';
@@ -70,13 +70,12 @@ const requests = {
     del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
 }
 
-const Activities = {
-    list: () => requests.get<Activity[]>('/activities'),
-    details: (id: string) => requests.get<Activity>(`/activities/${id}`),
-    create: (activity: ActivityFormValues) => requests.post<void>('activities', activity),
-    update: (activity: ActivityFormValues) => requests.put<void>(`/activities/${activity.id}`, activity),
-    delete: (id: string) => requests.del<void>(`/activities/${id}`),
-    attend: (id: string) => requests.post<void>(`/activities/${id}/attend`, {})
+const Posts = {
+    list: () => requests.get<Post[]>('/posts'),
+    details: (id: string) => requests.get<Post>(`/posts/${id}`),
+    create: (post: PostFormValues) => requests.post<void>('posts', post),
+    update: (post: PostFormValues) => requests.put<void>(`/posts/${post.id}`, post),
+    delete: (id: string) => requests.del<void>(`/posts/${id}`)
 }
 
 const Account = {
@@ -86,7 +85,7 @@ const Account = {
 }
 
 const agent = {
-    Activities,
+    Posts,
     Account
 }
 

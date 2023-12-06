@@ -1,28 +1,27 @@
 import { observer } from 'mobx-react-lite'
-import React, { useEffect } from 'react'
-import { Segment, Header, Comment, Button, Loader } from 'semantic-ui-react'
+import { useEffect } from 'react'
+import { Segment, Header, Comment,  Loader } from 'semantic-ui-react'
 import { useStore } from '../../../app/stores/store';
 import { Link } from 'react-router-dom';
 import { Formik, Form, FieldProps, Field } from 'formik';
-import MyTextArea from '../../../app/common/form/MyTextArea';
 import * as Yup from 'yup'
 import { formatDistanceToNow } from 'date-fns';
 
 interface Props {
-    activityId: string;
+    postId: string;
 }
 
-export default observer(function ActivityDetailedChat({ activityId }: Props) {
+export default observer(function PostDetailedChat({ postId }: Props) {
     const { commentStore } = useStore();
 
     useEffect(() => {
-        if (activityId) {
-            commentStore.createHubConnection(activityId)
+        if (postId) {
+            commentStore.createHubConnection(postId)
         }
         return () => {
             commentStore.clearComments();
         }
-    }, [commentStore, activityId])
+    }, [commentStore, postId])
 
     return (
         <>
@@ -33,7 +32,7 @@ export default observer(function ActivityDetailedChat({ activityId }: Props) {
                 color='teal'
                 style={{ border: 'none' }}
             >
-                <Header>Chat about this event</Header>
+                <Header>Comment this post</Header>
             </Segment>
             <Segment attached clearing>
                 <Formik

@@ -1,23 +1,23 @@
 import { Header, Item, Segment } from 'semantic-ui-react';
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
-import ActivityListItem from './ActivityListItem';
 import { Fragment } from 'react';
+import PostListItem from './PostListItem';
 
-export default observer(function ActivityList() {
-    const { activityStore } = useStore();
-    const { groupedActivities } = activityStore;
-    console.log(groupedActivities)
+export default observer(function PostList() {
+    const { postStore } = useStore();
+    const { groupedPosts } = postStore;
+    console.log(groupedPosts)
 
     return (
         <>
-            {groupedActivities.map(([group, activities]) => (
+            {groupedPosts.map(([group, posts]) => (
                 <Fragment key={group}>
                     <Header sub color='teal'>
                         {group}
                     </Header>
-                    {activities.map(activity => (
-                        <ActivityListItem key={activity.id} activity={activity} />
+                    {posts.map(post => (
+                        <PostListItem key={post.id} post={post} />
                     ))}
                 </Fragment>
             ))}

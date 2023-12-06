@@ -11,10 +11,10 @@ export default class CommentStore {
         makeAutoObservable(this);
     }
 
-    createHubConnection = (activityId: string) => {
-        if (store.activityStore.selectedActivity) {
+    createHubConnection = (postId: string) => {
+        if (store.postStore.selectedPost) {
             this.hubConnection = new HubConnectionBuilder()
-                .withUrl('http://localhost:5000/commentsChat?activityId=' + activityId, {
+                .withUrl('http://localhost:5000/commentsChat?postId=' + postId, {
                     accessTokenFactory: () => store.userStore.user?.token!
                 })
                 .withAutomaticReconnect()
@@ -51,12 +51,10 @@ export default class CommentStore {
     }
 
     addComment = async (values: any) => {
-        values.activityId = store.activityStore.selectedActivity?.id;
+        values.postId = store.postStore.selectedPost?.id;
         try {
             await this.hubConnection?.invoke('SendComment', values);
         } catch (error) {
-
         }
-
     }
 }

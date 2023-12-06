@@ -10,7 +10,7 @@ interface Props {
 
 }
 
-export default observer(function ActivityListItemAttendee({ attendees }: Props) {
+export default observer(function PostListItemAttendee({ attendees }: Props) {
     return (
         <List horizontal>
             {attendees.map(attendee => (

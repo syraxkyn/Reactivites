@@ -19,7 +19,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetPost(Guid id)
         {
-            return HandleResult(await Mediator.Send(new Application.Posts.Details.Query{Id = id}));
+            return HandleResult(await Mediator.Send(new Details.Query{Id = id}));
         }
 
         [HttpPost]

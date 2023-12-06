@@ -9,8 +9,8 @@ export default function NotFound(){
                 Oops we could not find
             </Header>
             <Segment.Inline>
-                <Button as={Link} to='/activities'>
-                    Return to activities page
+                <Button as={Link} to='/posts'>
+                    Return to news page
                 </Button>
             </Segment.Inline>
         </Segment>

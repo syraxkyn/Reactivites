@@ -11,14 +11,14 @@ export default observer(function HomePage() {
         <Segment inverted textAlign='center' vertical className='masthead'>
             <Container text>
                 <Header as='h1' inverted>
-                    <Image size='massive' src='/assets/logo.png' alt='logo' style={{ marginBottom: 12 }} />
-                    Reactivities
+                    <Image size='massive' src='/assets/soccer-ball.png' alt='logo' style={{ marginBottom: 12 }} />
+                    Footbik
                 </Header>
                 {userStore.isLoggedIn ? (
                     <>
-                        <Header as='h2' inverted content='Welcome to Reactivities' />
-                        <Button as={Link} to='/activities' size='huge' inverted>
-                            Go to activities!
+                        <Header as='h2' inverted content='Welcome to Footbik' />
+                        <Button as={Link} to='/posts' size='huge' inverted>
+                            Go to football portal!
                         </Button>
                     </>
                 ) : (

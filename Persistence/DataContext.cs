@@ -12,6 +12,10 @@ namespace Persistence
 
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<Player> Players { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
