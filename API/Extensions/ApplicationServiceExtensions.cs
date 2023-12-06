@@ -30,7 +30,12 @@ namespace API.Extensions
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+                    policy
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials()
+                    .WithOrigins("http://localhost:3000");
+
                 });
             });
 
@@ -41,6 +46,8 @@ namespace API.Extensions
            services.AddValidatorsFromAssemblyContaining<Create>();
            services.AddHttpContextAccessor();
            services.AddScoped<IUserAccessor,UserAccessor>();
+           //Оставить для фото
+           services.AddSignalR();
 
            return services;
         }
