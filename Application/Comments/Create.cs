@@ -14,7 +14,7 @@ namespace Application.Comments
         public class Command : IRequest<Result<CommentDto>>
         {
             public string Body { get; set; }
-            public Guid ActivityId { get; set; }
+            public Guid PostId { get; set; }
         }
         public class CommandValidator : AbstractValidator<Command>
         {
@@ -38,9 +38,9 @@ namespace Application.Comments
             }
             public async Task<Result<CommentDto>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var activity = await _context.Activities.FindAsync(request.ActivityId);
+                var post = await _context.Posts.FindAsync(request.PostId);
 
-                if (activity == null) return null;
+                if (post == null) return null;
 
                 var user = await _context.Users
                     .SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
@@ -48,11 +48,11 @@ namespace Application.Comments
                 var comment = new Comment
                 {
                     Author = user,
-                    Activity = activity,
+                    Post = post,
                     Body = request.Body
                 };
 
-                activity.Comments.Add(comment);
+                post.Comments.Add(comment);
 
                 var success = await _context.SaveChangesAsync() > 0;
 

@@ -1,4 +1,5 @@
 using Application.Core;
+using Application.Posts;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain;
@@ -7,13 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Persistence;
 
-namespace Application.Activities
+namespace Application.Posts
 {
     public class List
     {
-        public class Query : IRequest<Result<List<ActivityDto>>> { }
+        public class Query : IRequest<Result<List<PostDto>>> { }
 
-        public class Handler : IRequestHandler<Query, Result<List<ActivityDto>>>
+        public class Handler : IRequestHandler<Query, Result<List<PostDto>>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -23,13 +24,13 @@ namespace Application.Activities
                 _context = context;
             }
 
-            public async Task<Result<List<ActivityDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<PostDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var activities = await _context.Activities
-                .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider)
+                var posts = await _context.Posts
+                .ProjectTo<PostDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
-                return Result<List<ActivityDto>>.Success(activities);
+                return Result<List<PostDto>>.Success(posts);
             }
         }
     }

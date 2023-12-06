@@ -1,5 +1,5 @@
-using Application.Activities;
 using Application.Comments;
+using Application.Posts;
 using AutoMapper;
 using Domain;
 
@@ -9,14 +9,13 @@ namespace Application.Core
     {
         public MappingProfiles()
         {
-            CreateMap<Activity, Activity>();
-            CreateMap<Activity, ActivityDto>()
-                .ForMember(d => d.HostUsername, o => o.MapFrom(s => s.Attendees.
-                FirstOrDefault(x => x.IsHost).AppUser.UserName));
-            CreateMap<ActivityAttendee, Profiles.Profile>()
-                .ForMember(d=>d.DisplayName,o=>o.MapFrom(s=>s.AppUser.DisplayName))
-                .ForMember(d=>d.Username,o=>o.MapFrom(s=>s.AppUser.UserName))
-                .ForMember(d=>d.Bio,o=>o.MapFrom(s=>s.AppUser.Bio));
+            CreateMap<Post, Post>();
+            CreateMap<Post, PostDto>()
+                .ForMember(d => d.HostUsername, o => o.MapFrom(s => s.Author.UserName));
+            CreateMap<AppUser, Profiles.Profile>()
+                .ForMember(d=>d.DisplayName,o=>o.MapFrom(s=>s.DisplayName))
+                .ForMember(d=>d.Username,o=>o.MapFrom(s=>s.UserName))
+                .ForMember(d=>d.Bio,o=>o.MapFrom(s=>s.Bio));
             CreateMap<Comment, CommentDto>()
                 .ForMember(d=>d.DisplayName,o=>o.MapFrom(s=>s.Author.DisplayName))
                 .ForMember(d=>d.Username,o=>o.MapFrom(s=>s.Author.UserName));

@@ -1,9 +1,8 @@
 using Application.Core;
-using Domain;
 using MediatR;
 using Persistence;
 
-namespace Application.Activities
+namespace Application.Posts
 {
     public class Delete
     {
@@ -23,15 +22,15 @@ namespace Application.Activities
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var activity = await _context.Activities.FindAsync(request.Id);
+                var post = await _context.Posts.FindAsync(request.Id);
 
-                if (activity == null) return null;
+                if (post == null) return null;
 
-                _context.Remove(activity);
+                _context.Remove(post);
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if(!result) return Result<Unit>.Failure("Failed to delete the activity");
+                if(!result) return Result<Unit>.Failure("Failed to delete the post");
 
                 return Result<Unit>.Success(Unit.Value);
             }

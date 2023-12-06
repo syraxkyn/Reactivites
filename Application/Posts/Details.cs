@@ -1,4 +1,3 @@
-using Domain;
 using Persistence;
 using MediatR;
 using Application.Core;
@@ -6,16 +5,16 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Activities
+namespace Application.Posts
 {
     public class Details
     {
-        public class Query : IRequest<Result<ActivityDto>>
+        public class Query : IRequest<Result<PostDto>>
         {
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Result<ActivityDto>>
+        public class Handler : IRequestHandler<Query, Result<PostDto>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -24,13 +23,13 @@ namespace Application.Activities
                 _mapper = mapper;
                 _context = context;
             }
-            public async Task<Result<ActivityDto>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<PostDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var activity = await _context.Activities
-                .ProjectTo<ActivityDto>(_mapper.ConfigurationProvider)
+                var post = await _context.Posts
+                .ProjectTo<PostDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(x => x.Id == request.Id);
 
-                return Result<ActivityDto>.Success(activity);
+                return Result<PostDto>.Success(post);
             }
         }
     }
