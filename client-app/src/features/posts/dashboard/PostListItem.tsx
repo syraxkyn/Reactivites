@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from 'react'
+import { SyntheticEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Icon, Item, Label, Segment } from 'semantic-ui-react'
 import { useStore } from '../../../app/stores/store';
@@ -29,7 +29,7 @@ export default function PostListItem({ post }: Props) {
                             <Item.Header as={Link} to={`/posts/${post.id}`}>
                                 {post.title}
                             </Item.Header>
-                            <Item.Description>Hosted by {post.host?.displayName}</Item.Description>
+                            <Item.Description>Hosted by {post.hostUsername}</Item.Description>
                             {post.isHost && (
                                 <Item.Description>
                                     <Label basic color='orange'>

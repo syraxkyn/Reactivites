@@ -11,9 +11,13 @@ export default function NavBar() {
                     <img src="/assets/soccer-ball.png" alt="logo" style={{ marginRight: '10px' }} />
                 </Menu.Item>
                 <Menu.Item as={NavLink} to='/posts' name='Posts' />
+                <Menu.Item as={NavLink} to='/teams' name='Teams' />
                 <Menu.Item as={NavLink} to='/errors' name='Errors' />
                 <Menu.Item>
                     <Button as={NavLink} to='/createPost' positive content='Create Post' />
+                </Menu.Item>
+                <Menu.Item>
+                    <Button as={NavLink} to='/createTeam' positive content='Create Team' />
                 </Menu.Item>
                 <Menu.Item position='right'>
                     <Image src={user?.image || '/assets/user.png'} avatar spaced='right' />

@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import { router } from '../router/Router';
 import { store } from '../stores/store';
 import { User, UserFormValues } from '../models/user';
+import { Team, TeamFormValues } from '../models/team';
+import { Player, PlayerFormValues } from '../models/player';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -78,6 +80,23 @@ const Posts = {
     delete: (id: string) => requests.del<void>(`/posts/${id}`)
 }
 
+const Teams = {
+    list: () => requests.get<Team[]>('/teams'),
+    details: (id: string) => requests.get<Team>(`/teams/${id}`),
+    create: (team: TeamFormValues) => requests.post<void>('teams', team),
+    update: (team: TeamFormValues) => requests.put<void>(`/teams/${team.id}`, team),
+    delete: (id: string) => requests.del<void>(`/teams/${id}`)
+}
+
+const Players = {
+    list: () => requests.get<Player[]>('/players'),
+    details: (id: string) => requests.get<Player>(`/players/${id}`),
+    create: (player: PlayerFormValues) => requests.post<void>('players', player),
+    update: (player: PlayerFormValues) => requests.put<void>(`/players/${player.id}`, player),
+    delete: (id: string) => requests.del<void>(`/players/${id}`)
+}
+
+
 const Account = {
     current: () => requests.get<User>('/account'),
     login: (user: UserFormValues) => requests.post<User>('/account/login', user),
@@ -86,7 +105,9 @@ const Account = {
 
 const agent = {
     Posts,
-    Account
+    Account,
+    Teams,
+    Players
 }
 
 export default agent;

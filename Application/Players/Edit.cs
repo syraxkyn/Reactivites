@@ -18,7 +18,6 @@ namespace Application.Players
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Team).SetValidator(new PlayerValidator());
             }
         }
 
@@ -35,15 +34,16 @@ namespace Application.Players
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var team = await _context.Teams.FindAsync(request.Team.Id);
+                var player = await _context.Players.FindAsync(request.Player.Id);
+                request.Player.TeamId = player.TeamId;
+                Console.WriteLine(player.TeamId);
+                if (player == null) return null;
 
-                if (team == null) return null;
-
-                _mapper.Map(request.Team, team);
+                _mapper.Map(request.Player, player);
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if(!result) return Result<Unit>.Failure("Failed to update team");
+                if(!result) return Result<Unit>.Failure("Failed to update player");
 
                 return Result<Unit>.Success(Unit.Value);
             }

@@ -8,7 +8,7 @@ namespace Persistence
         public static async Task SeedData(DataContext context,
             UserManager<AppUser> userManager)
         {
-            if (!userManager.Users.Any() && !context.Posts.Any())
+            if (!userManager.Users.Any() && !context.Posts.Any() && !context.Teams.Any() && !context.Players.Any())
             {
                 var users = new List<AppUser>
                 {
@@ -55,7 +55,35 @@ namespace Persistence
                     }
                 };
 
+                var teams = new List<Team>
+                {
+                    new Team
+                    {
+                        Name = "ПАРТЫЗАН"
+                    },
+                    new Team
+                    {
+                        Name = "СПАРТА"
+                    }
+                };
+
+                var players = new List<Player>
+                {
+                    new Player
+                    {
+                        Name = "Шулаков Андрей",
+                        Team = teams[0]
+                    },
+                    new Player
+                    {
+                        Name = "Ивановский Егор",
+                        Team = teams[1]
+                    }
+                };
+
                 await context.Posts.AddRangeAsync(posts);
+                await context.Teams.AddRangeAsync(teams);
+                await context.Players.AddRangeAsync(players);
                 await context.SaveChangesAsync();
             }
         }

@@ -26,7 +26,7 @@ namespace Application.Teams
             }
             public async Task<Result<TeamDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var team = await _context.Teams
+                var team = await _context.Teams.Include(t=>t.Players)
                 .ProjectTo<TeamDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync(x => x.Id == request.Id);
 

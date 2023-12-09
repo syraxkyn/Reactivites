@@ -4,6 +4,6 @@ namespace Domain
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        ICollection<Player> Players {get;set;} = new List<Player>();
+        public ICollection<Player> Players {get;set;} = new List<Player>();
     }
 }

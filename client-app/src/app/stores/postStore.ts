@@ -76,8 +76,9 @@ export default class PostStore {
         const user = store.userStore.user;
         if (user) {
             post.isHost = post.hostUsername === user.username;
-            //post.host = activity.attendees?.find(x => x.username === post.hostUsername);
+            // post.host = activity.attendees?.find(x => x.username === post.hostUsername);
         }
+        post.hostUsername = post.author.displayName;
         post.date = new Date(post.date!);
         this.postRegistry.set(post.id, post);
     }

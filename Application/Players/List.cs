@@ -13,9 +13,9 @@ namespace Application.Players
 {
     public class List
     {
-        public class Query : IRequest<Result<List<TeamDto>>> { }
+        public class Query : IRequest<Result<List<PlayerDto>>> { }
 
-        public class Handler : IRequestHandler<Query, Result<List<TeamDto>>>
+        public class Handler : IRequestHandler<Query, Result<List<PlayerDto>>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -25,13 +25,13 @@ namespace Application.Players
                 _context = context;
             }
 
-            public async Task<Result<List<TeamDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<PlayerDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var teams = await _context.Teams
-                .ProjectTo<TeamDto>(_mapper.ConfigurationProvider)
+                var players = await _context.Players
+                .ProjectTo<PlayerDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
-                return Result<List<TeamDto>>.Success(teams);
+                return Result<List<PlayerDto>>.Success(players);
             }
         }
     }

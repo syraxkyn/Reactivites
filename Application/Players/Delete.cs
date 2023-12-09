@@ -22,7 +22,7 @@ namespace Application.Players
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var player = await _context.Teams.FindAsync(request.Id);
+                var player = await _context.Players.FindAsync(request.Id);
 
                 if (player == null) return null;
 
