@@ -72,18 +72,32 @@ namespace Persistence
                     new Player
                     {
                         Name = "Шулаков Андрей",
-                        Team = teams[0]
+                        Team = teams[0],
+                        Position = "Полузащитник"
                     },
                     new Player
                     {
                         Name = "Ивановский Егор",
-                        Team = teams[1]
+                        Team = teams[1],
+                        Position = "Защитник"
+                    }
+                };
+
+                var matches = new List<Match>
+                {
+                    new Match
+                    {
+                        FirstTeam = teams[0],
+                        SecondTeam = teams[1],
+                        GoalsScoredFirstTeam = 3,
+                        GoalsScoredSecondTeam = 4
                     }
                 };
 
                 await context.Posts.AddRangeAsync(posts);
                 await context.Teams.AddRangeAsync(teams);
                 await context.Players.AddRangeAsync(players);
+                await context.Matches.AddRangeAsync(matches);
                 await context.SaveChangesAsync();
             }
         }

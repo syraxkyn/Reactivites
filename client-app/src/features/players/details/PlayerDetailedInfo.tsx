@@ -1,12 +1,12 @@
 import { observer } from 'mobx-react-lite';
-import { Segment, Grid, Icon, Table } from 'semantic-ui-react'
-import { Team } from '../../../app/models/team';
+import { Segment, Table } from 'semantic-ui-react'
+import { Player } from '../../../app/models/player';
 
 interface Props {
-    team: Team
+    player: Player
 }
 
-export default observer(function TeamDetailedInfo({ team }: Props) {
+export default observer(function PlayerDetailedInfo({ player }: Props) {
     return (
         <Segment.Group>
             <Segment attached='top'>
@@ -20,14 +20,12 @@ export default observer(function TeamDetailedInfo({ team }: Props) {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {team.players?.map(player => (
-                            <Table.Row key={player.id}>
-                                <Table.Cell>{player.name}</Table.Cell>
-                                <Table.Cell>{player.position}</Table.Cell>
-                                <Table.Cell>{player.goals}</Table.Cell>
-                                <Table.Cell>{player.assists}</Table.Cell>
-                            </Table.Row>
-                        ))}
+                        <Table.Row>
+                            <Table.Cell>{player.name}</Table.Cell>
+                            <Table.Cell>{player.position}</Table.Cell>
+                            <Table.Cell>{player.goals}</Table.Cell>
+                            <Table.Cell>{player.assists}</Table.Cell>
+                        </Table.Row>
                     </Table.Body>
                 </Table>
             </Segment>

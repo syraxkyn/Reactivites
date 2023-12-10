@@ -7,6 +7,7 @@ namespace Application.Players
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string Position { get; set; }
         public string TeamName{get;set;}
         public int Goals { get; set; }
         public int Assists { get; set; }

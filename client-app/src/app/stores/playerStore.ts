@@ -1,6 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import { store } from "./store";
 import { Player, PlayerFormValues } from "../models/player";
 
 export default class PlayerStore {
@@ -58,11 +57,6 @@ export default class PlayerStore {
     }
 
     private setPlayer = (player: Player) => {
-        const user = store.userStore.user;
-        // if (user) {
-        //     team.isHost = team.hostUsername === user.username;
-        //     // post.host = activity.attendees?.find(x => x.username === post.hostUsername);
-        // }
         this.playerRegistry.set(player.id, player);
     }
 
@@ -75,7 +69,6 @@ export default class PlayerStore {
     }
 
     createPlayer = async (player: PlayerFormValues) => {
-        const user = store.userStore.user;
         try {
             await agent.Players.create(player);
             const newPlayer = new Player(player);
@@ -89,7 +82,7 @@ export default class PlayerStore {
         }
     }
 
-    updateTeam = async (player: PlayerFormValues) => {
+    updatePlayer = async (player: PlayerFormValues) => {
         try {
             await agent.Teams.update(player);
             runInAction(() => {
@@ -104,7 +97,7 @@ export default class PlayerStore {
         }
     }
 
-    deleteTeam = async (id: string) => {
+    deletePlayer= async (id: string) => {
         this.loading = true;
         try {
             await agent.Players.delete(id);
@@ -120,7 +113,7 @@ export default class PlayerStore {
         }
     }
 
-    clearSelectedTeam = () => {
+    clearSelectedPlayer = () => {
         this.selectedPlayer = undefined;
     }
 }

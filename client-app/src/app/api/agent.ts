@@ -6,6 +6,7 @@ import { store } from '../stores/store';
 import { User, UserFormValues } from '../models/user';
 import { Team, TeamFormValues } from '../models/team';
 import { Player, PlayerFormValues } from '../models/player';
+import { Match, MatchFormValues } from '../models/match';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -88,6 +89,14 @@ const Teams = {
     delete: (id: string) => requests.del<void>(`/teams/${id}`)
 }
 
+const Matches = {
+    list: () => requests.get<Match[]>('/matches'),
+    details: (id: string) => requests.get<Match>(`/matches/${id}`),
+    create: (match: MatchFormValues) => requests.post<void>('matches', match),
+    update: (match: MatchFormValues) => requests.put<void>(`/v/${match.id}`, match),
+    delete: (id: string) => requests.del<void>(`/matches/${id}`)
+}
+
 const Players = {
     list: () => requests.get<Player[]>('/players'),
     details: (id: string) => requests.get<Player>(`/players/${id}`),
@@ -107,7 +116,8 @@ const agent = {
     Posts,
     Account,
     Teams,
-    Players
+    Players,
+    Matches
 }
 
 export default agent;

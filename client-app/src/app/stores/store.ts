@@ -6,6 +6,7 @@ import CommentStore from "./commentStore";
 import PostStore from "./postStore";
 import TeamStore from "./teamStore";
 import PlayerStore from "./playerStore";
+import MatchStore from "./matchStore";
 
 interface Store{
     postStore: PostStore
@@ -15,6 +16,7 @@ interface Store{
     commentStore: CommentStore;
     teamStore: TeamStore;
     playerStore: PlayerStore;
+    matchStore: MatchStore;
 }
 
 export const store: Store = {
@@ -24,7 +26,8 @@ export const store: Store = {
     modalStore: new ModalStore(),
     commentStore: new CommentStore(),
     teamStore: new TeamStore(),
-    playerStore: new PlayerStore()
+    playerStore: new PlayerStore(),
+    matchStore: new MatchStore()
 }
 
 export const StoreContext = createContext(store);

@@ -4,6 +4,7 @@ namespace Domain
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public string Position { get; set; }
         public int Goals { get; set; } = 0;
         public int Assists { get; set; } = 0;
         public Guid TeamId { get; set; }

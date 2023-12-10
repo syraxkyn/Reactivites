@@ -17,7 +17,6 @@ namespace Persistence
         public DbSet<Player> Players { get; set; }
         public DbSet<Match> Matches { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -25,6 +24,11 @@ namespace Persistence
             builder.Entity<Comment>()
                 .HasOne(a => a.Post)
                 .WithMany(c=>c.Comments)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Message>()
+                .HasOne(a => a.Match)
+                .WithMany(c=>c.Messages)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

@@ -13,15 +13,18 @@ import MyTextArea from '../../../app/common/form/MyTextArea';
 import MySelectInput from '../../../app/common/form/MySelectInput';
 import { categoryOptions } from '../../../app/common/options/positionOptions';
 import MyDateInput from '../../../app/common/form/MyDateInput';
+import { MatchFormValues } from '../../../app/models/match';
 
-export default observer(function PostForm() {
-    const { postStore } = useStore();
-    const { selectedPost, createPost, updatePost,
-        loading, loadPost, loadingInitial } = postStore;
+export default observer(function MatchForm() {
+    const { matchStore, teamStore } = useStore();
+    const { selectedMatch, createMatch, updateMatch,
+        loading, loadMatch, loadingInitial } = matchStore;
+    const { loadTeams, teamRegistry, teams } = teamStore;
+    let teamOptions: { text: string; value: string; }[]
     const { id } = useParams();
     const navigate = useNavigate()
 
-    const [post, setPost] = useState<PostFormValues>(new PostFormValues());
+    const [match, setMatch] = useState<MatchFormValues>(new MatchFormValues());
 
     const validationScheme = Yup.object({
         title: Yup.string().required('The post title is required'),
@@ -30,37 +33,40 @@ export default observer(function PostForm() {
     })
 
     useEffect(() => {
-        if (id) loadPost(id).then(post => setPost(new PostFormValues(post)))
-    }, [id, loadPost])
+        if (teamRegistry.size <= 1) loadTeams();teamOptions = teams.map(team => {
+            return { text: team.name, value: team.id };
+        }); 
+        if (id) loadMatch(id).then(match => setMatch(new MatchFormValues(match)))
+    }, [id, loadMatch, teamRegistry.size])
 
-    function handleFormSubmit(post: PostFormValues) {
-        if (!post.id) {
-            let newPost = {
-                ...post,
+    function handleFormSubmit(match: MatchFormValues) {
+        if (!match.id) {
+            let newMatch = {
+                ...match,
                 id: uuid()
             };
-            createPost(newPost).then(() => navigate(`/posts/${newPost.id}`))
+            createMatch(newMatch).then(() => navigate(`/matches/${newMatch.id}`))
         }
         else {
-            updatePost(post).then(() => navigate(`/posts/${post.id}`))
+            updateMatch(match).then(() => navigate(`/matches/${match.id}`))
         }
     }
-
-    if (loadingInitial) return <LoadingComponent content='Loading post...' />
+    
+    if (teamStore.loadingInitial) return <LoadingComponent content='Loading teams...' />
+    if (loadingInitial) return <LoadingComponent content='Loading match...' />
 
     return (
         <Segment clearing>
-            <Header content='Post Details' color='teal' />
+            <Header content='Match Details' color='teal' />
             <Formik
                 validationSchema={validationScheme}
                 enableReinitialize
-                initialValues={post}
+                initialValues={match}
                 onSubmit={values => handleFormSubmit(values)}>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
-                        <MyTextInput name='title' placeholder='Title' />
-                        <MyTextArea rows={3} placeholder='Text' name='text' />
-                        {/* <MySelectInput options={categoryOptions} placeholder='Category' name='category' /> */}
+                        <MySelectInput options={teamOptions} placeholder='Team' name='FirstTeamId' />
+                        <MySelectInput options={teamOptions} placeholder='Team' name='SecondTeamId' />
                         <MyDateInput
                             placeholderText='Date'
                             name='date'
@@ -68,9 +74,6 @@ export default observer(function PostForm() {
                             timeCaption='time'
                             dateFormat='MMMM d, yyyy h:mm aa'
                         />
-                        {/* <Header content='Location Details' color='teal' />
-                        <MyTextInput placeholder='City' name='city' />
-                        <MyTextInput placeholder='Venue' name='venue' /> */}
                         <Button
                             disabled={isSubmitting || !dirty || !isValid}
                             loading={isSubmitting}

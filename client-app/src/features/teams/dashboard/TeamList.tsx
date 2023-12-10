@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { Fragment } from 'react';
 import TeamListItem from './TeamListItem';
 
-export default observer(function PostList() {
+export default observer(function TeamList() {
     const { teamStore } = useStore();
     const { teams } = teamStore;
     console.log(teams)

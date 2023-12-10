@@ -10,6 +10,9 @@ import PostForm from "../../features/posts/form/PostForm";
 import TeamDashboard from "../../features/teams/dashboard/TeamDashboard";
 import TeamDetails from "../../features/teams/details/TeamDetails";
 import TeamForm from "../../features/teams/form/TeamForm";
+import PlayerDashboard from "../../features/players/dashboard/PlayerDashboard";
+import PlayerDetails from "../../features/players/details/PlayerDetails";
+import PlayerForm from "../../features/players/form/PlayerForm";
 
 export const routes: RouteObject[] = [
     {
@@ -19,6 +22,9 @@ export const routes: RouteObject[] = [
             { path: 'posts', element: <PostDashboard /> },
             { path: 'posts/:id', element: <PostDetails /> },
             { path: 'createPost', element: <PostForm key='create' /> },
+            { path: 'players', element: <PlayerDashboard /> },
+            { path: 'players/:id', element: <PlayerDetails /> },
+            { path: 'createPlayer', element: <PlayerForm key='create' /> },
             { path: 'teams', element: <TeamDashboard /> },
             { path: 'teams/:id', element: <TeamDetails /> },
             { path: 'createTeam', element: <TeamForm key='create' /> },

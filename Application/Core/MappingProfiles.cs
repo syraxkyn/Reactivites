@@ -1,4 +1,6 @@
 using Application.Comments;
+using Application.Matches;
+using Application.Messages;
 using Application.Players;
 using Application.Posts;
 using Application.Teams;
@@ -25,7 +27,12 @@ namespace Application.Core
             CreateMap<Comment, CommentDto>()
                 .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.Author.DisplayName))
                 .ForMember(d => d.Username, o => o.MapFrom(s => s.Author.UserName));
-
+            CreateMap<Message, MessageDto>()
+                .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.Author.DisplayName))
+                .ForMember(d => d.Username, o => o.MapFrom(s => s.Author.UserName));
+            CreateMap<Match, MatchDto>()
+                .ForMember(d => d.FirstTeamName, o => o.MapFrom(s => s.FirstTeam.Name))
+                .ForMember(d => d.SecondTeamName, o => o.MapFrom(s => s.SecondTeam.Name));;
         }
     }
 }
