@@ -12,7 +12,7 @@ namespace Application.Messages
     {
         public class Query : IRequest<Result<List<MessageDto>>>
         {
-            public Guid PostId {get;set;}
+            public Guid MatchId { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Result<List<MessageDto>>>
@@ -30,12 +30,13 @@ namespace Application.Messages
 
             public async Task<Result<List<MessageDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var comments = await _context.Messages
-                    .OrderByDescending(x=>x.CreatedAt)
+                var messages = await _context.Messages
+                    .Where(x => x.Match.Id == request.MatchId)
+                    .OrderByDescending(x => x.CreatedAt)
                     .ProjectTo<MessageDto>(_mapper.ConfigurationProvider)
                     .ToListAsync();
 
-                return Result<List<MessageDto>>.Success(comments);
+                return Result<List<MessageDto>>.Success(messages);
             }
 
         }

@@ -28,8 +28,9 @@ export default function PostListItem({ post }: Props) {
                         <Item.Content>
                             <Item.Header as={Link} to={`/posts/${post.id}`}>
                                 {post.title}
+                                {format(post.date!, 'dd MMM yyyy h:mm aa')}
                             </Item.Header>
-                            <Item.Description>Hosted by {post.hostUsername}</Item.Description>
+                            <Item.Description>Hosted by {post.hostUsername} </Item.Description>
                             {post.isHost && (
                                 <Item.Description>
                                     <Label basic color='orange'>

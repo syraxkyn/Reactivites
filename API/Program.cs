@@ -39,6 +39,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapHub<CommentHub>("/commentsChat");
+app.MapHub<MessageHub>("/messagesChat");
+
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;

@@ -14,6 +14,8 @@ namespace Application.Messages
         public class Command : IRequest<Result<MessageDto>>
         {
             public string Body { get; set; }
+            public Guid MatchId { get; set; }
+
         }
         public class CommandValidator : AbstractValidator<Command>
         {

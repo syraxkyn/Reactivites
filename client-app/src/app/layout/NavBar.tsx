@@ -13,6 +13,7 @@ export default function NavBar() {
                 <Menu.Item as={NavLink} to='/posts' name='Posts' />
                 <Menu.Item as={NavLink} to='/teams' name='Teams' />
                 <Menu.Item as={NavLink} to='/players' name='Players' />
+                <Menu.Item as={NavLink} to='/matches' name='Matches' />
                 <Menu.Item as={NavLink} to='/errors' name='Errors' />
                 <Menu.Item>
                     <Button as={NavLink} to='/createPost' positive content='Create Post' />

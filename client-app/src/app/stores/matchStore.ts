@@ -14,21 +14,19 @@ export default class MatchStore {
         makeAutoObservable(this);
     }
 
-    get matchesByDate() {
-        return Array.from(this.matchRegistry.values()).sort((a, b) =>
-            a.date!.getTime() - b.date!.getTime()
-        );
-    }
+    // get matchesByDate() {
+    //     return Array.from(this.matchRegistry.values())
+    // }
 
-    get groupedMatches() {
-        return Object.entries(
-            this.matchesByDate.reduce((matches, match) => {
-                const date = format(match.date!, 'dd MMM yyyy')
-                matches[date] = matches[date] ? [...matches[date], match] : [match];
-                return matches;
-            }, {} as { [key: string]: Match[] })
-        )
-    }
+    // get groupedMatches() {
+    //     return Object.entries(
+    //         this.matchesByDate.reduce((matches, match) => {
+    //             const date = format(match.date!, 'dd MMM yyyy')
+    //             matches[date] = matches[date] ? [...matches[date], match] : [match];
+    //             return matches;
+    //         }, {} as { [key: string]: Match[] })
+    //     )
+    // }
 
     get matches() {
         return Array.from(this.matchRegistry.values());
@@ -74,6 +72,7 @@ export default class MatchStore {
     }
 
     private setMatch = (match: Match) => {
+        match.date = new Date(match.date!);
         this.matchRegistry.set(match.id, match);
     }
 

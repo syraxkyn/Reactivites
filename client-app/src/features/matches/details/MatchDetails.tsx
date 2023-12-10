@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import MatchDetailedHeader from './MatchDetailedHeader';
 import MatchDetailedInfo from './MatchDetailedInfo';
+import MatchDetailedChat from './MatchDetailedChat';
 
 export default observer(function MatchDetails() {
   const { matchStore } = useStore();
@@ -24,7 +25,7 @@ export default observer(function MatchDetails() {
       <Grid.Column width={10}>
         <MatchDetailedHeader match={match}/>
         <MatchDetailedInfo match={match}/>
-        {/* <PostDetailedChat postId={match.id}/> */}
+        <MatchDetailedChat matchId={match.id}/>
       </Grid.Column>
       <Grid.Column width={6}>
         {/* <PostDetailedSideBar/> */}

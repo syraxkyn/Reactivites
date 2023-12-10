@@ -93,7 +93,7 @@ const Matches = {
     list: () => requests.get<Match[]>('/matches'),
     details: (id: string) => requests.get<Match>(`/matches/${id}`),
     create: (match: MatchFormValues) => requests.post<void>('matches', match),
-    update: (match: MatchFormValues) => requests.put<void>(`/v/${match.id}`, match),
+    update: (match: MatchFormValues) => requests.put<void>(`/matches/${match.id}`, match),
     delete: (id: string) => requests.del<void>(`/matches/${id}`)
 }
 

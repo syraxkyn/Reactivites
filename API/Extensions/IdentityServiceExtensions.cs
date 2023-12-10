@@ -42,6 +42,10 @@ namespace API.Extensions
                             {
                                 context.Token = accessToken;
                             }
+                            if(!string.IsNullOrEmpty(accessToken)&&path.StartsWithSegments("/messagesChat"))
+                            {
+                                context.Token = accessToken;
+                            }
                             return Task.CompletedTask;
                         }
                     };

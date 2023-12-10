@@ -6,21 +6,15 @@ import MatchListItem from './MatchListItem';
 
 export default observer(function MatchList() {
     const { matchStore } = useStore();
-    const { groupedMatches } = matchStore;
-    console.log(groupedMatches)
+    const { matches } = matchStore;
 
     return (
         <>
-            {groupedMatches.map(([group, matches]) => (
-                <Fragment key={group}>
-                    <Header sub color='teal'>
-                        {group}
-                    </Header>
-                    {matches.map(match => (
-                        <MatchListItem key={match.id} match={match} />
-                    ))}
-                </Fragment>
-            ))}
+            <Fragment>
+                {matches.map(match => (
+                    <MatchListItem key={match.id} match={match} />
+                ))}
+            </Fragment>
         </>
     )
 })

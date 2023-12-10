@@ -15,7 +15,6 @@ export default function MatchListItem({ match }: Props) {
     const { matchStore } = useStore();
     const { deleteMatch, loading } = matchStore;
     const [target, setTarget] = useState('');
-
     function handlePostDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
         setTarget(e.currentTarget.name);
         deleteMatch(id);

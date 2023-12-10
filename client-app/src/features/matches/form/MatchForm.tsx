@@ -3,15 +3,11 @@ import { Button, Header, Segment } from 'semantic-ui-react'
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { PostFormValues } from '../../../app/models/post';
 import { v4 as uuid } from 'uuid';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import MyTextInput from '../../../app/common/form/MyTextInput';
-import MyTextArea from '../../../app/common/form/MyTextArea';
 import MySelectInput from '../../../app/common/form/MySelectInput';
-import { categoryOptions } from '../../../app/common/options/positionOptions';
 import MyDateInput from '../../../app/common/form/MyDateInput';
 import { MatchFormValues } from '../../../app/models/match';
 
@@ -27,8 +23,8 @@ export default observer(function MatchForm() {
     const [match, setMatch] = useState<MatchFormValues>(new MatchFormValues());
 
     const validationScheme = Yup.object({
-        title: Yup.string().required('The post title is required'),
-        text: Yup.string().required('The text is required'),
+        FirstTeamId: Yup.string().required('The post title is required').notOneOf([Yup.ref('SecondTeamId')], 'FirstTeamId should not be equal to SecondTeamId'),
+        SecondTeamId: Yup.string().required('The text is required'),
         date: Yup.string().required()
     })
 
