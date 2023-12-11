@@ -8,6 +8,8 @@ interface Props {
 }
 
 export default observer(function MatchDetailedInfo({ match }: Props) {
+console.log(match.firstTeamName)
+
     return (
         <Segment.Group>
             <Segment attached='top'>

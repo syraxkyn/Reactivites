@@ -39,12 +39,17 @@ namespace Application.Messages
             }
             public async Task<Result<MessageDto>> Handle(Command request, CancellationToken cancellationToken)
             {
+                var match = await _context.Matches.FindAsync(request.MatchId);
+
+                if (match == null) return null;
+
                 var user = await _context.Users
                     .SingleOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
                 var message = new Message
                 {
                     Author = user,
+                    Match = match,
                     Body = request.Body
                 };
 
@@ -54,7 +59,7 @@ namespace Application.Messages
 
                 if(success) return Result<MessageDto>.Success(_mapper.Map<MessageDto>(message));
 
-                return Result<MessageDto>.Failure("Failed to add comment");
+                return Result<MessageDto>.Failure("Failed to add message");
             }
         }
     }

@@ -39,9 +39,13 @@ export default observer(function MatchForm() {
         if (!match.id) {
             let newMatch = {
                 ...match,
+                firstTeamName: 'okay',
+                secondTeamName: 'okay',
                 id: uuid()
             };
-            createMatch(newMatch).then(() => navigate(`/matches/${newMatch.id}`))
+            console.log('new match')
+            console.log(newMatch)
+            createMatch(newMatch).then(() => navigate(`/matches`))
         }
         else {
             updateMatch(match).then(() => navigate(`/matches/${match.id}`))

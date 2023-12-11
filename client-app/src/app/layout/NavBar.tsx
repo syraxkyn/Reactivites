@@ -24,6 +24,9 @@ export default function NavBar() {
                 <Menu.Item>
                     <Button as={NavLink} to='/createPlayer' positive content='Create Player' />
                 </Menu.Item>
+                <Menu.Item>
+                    <Button as={NavLink} to='/createMatch' positive content='Create Match' />
+                </Menu.Item>
                 <Menu.Item position='right'>
                     <Image src={user?.image || '/assets/user.png'} avatar spaced='right' />
                     <Dropdown pointing='top left' text={user?.displayName}>

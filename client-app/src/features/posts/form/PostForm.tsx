@@ -10,9 +10,6 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import MyTextInput from '../../../app/common/form/MyTextInput';
 import MyTextArea from '../../../app/common/form/MyTextArea';
-import MySelectInput from '../../../app/common/form/MySelectInput';
-import { categoryOptions } from '../../../app/common/options/positionOptions';
-import MyDateInput from '../../../app/common/form/MyDateInput';
 
 export default observer(function PostForm() {
     const { postStore } = useStore();
@@ -26,7 +23,7 @@ export default observer(function PostForm() {
     const validationScheme = Yup.object({
         title: Yup.string().required('The post title is required'),
         text: Yup.string().required('The text is required'),
-        date: Yup.string().required()
+        // date: Yup.string().required()
     })
 
     useEffect(() => {
@@ -37,6 +34,7 @@ export default observer(function PostForm() {
         if (!post.id) {
             let newPost = {
                 ...post,
+                date: new Date(), // Это устанавливает текущую дату и время
                 id: uuid()
             };
             createPost(newPost).then(() => navigate(`/posts/${newPost.id}`))
@@ -60,17 +58,6 @@ export default observer(function PostForm() {
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
                         <MyTextInput name='title' placeholder='Title' />
                         <MyTextArea rows={3} placeholder='Text' name='text' />
-                        {/* <MySelectInput options={categoryOptions} placeholder='Category' name='category' /> */}
-                        <MyDateInput
-                            placeholderText='Date'
-                            name='date'
-                            showTimeSelect
-                            timeCaption='time'
-                            dateFormat='MMMM d, yyyy h:mm aa'
-                        />
-                        {/* <Header content='Location Details' color='teal' />
-                        <MyTextInput placeholder='City' name='city' />
-                        <MyTextInput placeholder='Venue' name='venue' /> */}
                         <Button
                             disabled={isSubmitting || !dirty || !isValid}
                             loading={isSubmitting}

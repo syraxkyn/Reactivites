@@ -34,7 +34,7 @@ export const routes: RouteObject[] = [
             { path: 'teams', element: <TeamDashboard /> },
             { path: 'teams/:id', element: <TeamDetails /> },
             { path: 'createTeam', element: <TeamForm key='create' /> },
-            { path: 'manage/:id', element: <PostForm key='manage' /> },
+            { path: 'managePost/:id', element: <PostForm key='manage' /> },
             { path: 'login', element: <LoginForm/> },
             { path: 'errors', element: <TestErrors /> },
             { path: 'not-found', element: <NotFound /> },

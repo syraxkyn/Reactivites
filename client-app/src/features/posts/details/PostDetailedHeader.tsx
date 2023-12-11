@@ -50,7 +50,7 @@ export default observer(function PostDetailedHeader({ post }: Props) {
                 {post.isHost ? (
                     <>
                         <Button as={Link}
-                            to={`/manage/${post.id}`}
+                            to={`/managePost/${post.id}`}
                             color='orange'
                             floated='right'>
                             Edit Post
