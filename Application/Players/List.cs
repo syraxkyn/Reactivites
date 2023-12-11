@@ -16,7 +16,7 @@ namespace Application.Players
     {
         public class Query : IRequest<Result<PagedList<PlayerDto>>> 
         { 
-            public PagingParams Params { get; set; }
+            public PlayerParams Params { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Result<PagedList<PlayerDto>>>
@@ -32,8 +32,15 @@ namespace Application.Players
             public async Task<Result<PagedList<PlayerDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var query = _context.Players
+                .Where(d=>d.Position ==request.Params.Position)
                 .ProjectTo<PlayerDto>(_mapper.ConfigurationProvider)
                 .AsQueryable();
+
+                // Console.WriteLine(request.Params.Position);
+
+                // if(request.Params.Position!=null){
+                //     query.Where(d=>d.Position ==request.Params.Position);
+                // }
 
                 return Result<PagedList<PlayerDto>>.Success(
                     await PagedList<PlayerDto>.CreateAsync(query, request.Params.PageNumber, request.Params.PageSize)

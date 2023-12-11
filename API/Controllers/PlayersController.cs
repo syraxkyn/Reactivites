@@ -10,7 +10,7 @@ namespace API.Controllers
     {
 
         [HttpGet]
-        public async Task<IActionResult> GetPlayers([FromQuery]PagingParams param)
+        public async Task<IActionResult> GetPlayers([FromQuery]PlayerParams param)
         {
             return HandlePagedResult(await Mediator.Send(new List.Query{Params = param}));
         }
