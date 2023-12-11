@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Domain;
 using Application.Players;
+using Application.Core;
 
 namespace API.Controllers
 {
@@ -9,9 +10,9 @@ namespace API.Controllers
     {
 
         [HttpGet]
-        public async Task<IActionResult> GetPlayers()
+        public async Task<IActionResult> GetPlayers([FromQuery]PagingParams param)
         {
-            return HandleResult(await Mediator.Send(new List.Query()));
+            return HandlePagedResult(await Mediator.Send(new List.Query{Params = param}));
         }
 
         [HttpGet("{id}")]

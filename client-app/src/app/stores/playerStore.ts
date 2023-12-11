@@ -1,6 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Player, PlayerFormValues } from "../models/player";
+import { Pagination, PagingParams } from "../models/pagination";
 
 export default class PlayerStore {
     playerRegistry = new Map<string, Player>();
@@ -8,9 +9,22 @@ export default class PlayerStore {
     editMode = false;
     loading = false;
     loadingInitial = false;
+    pagination: Pagination | null = null;
+    pagingParams = new PagingParams();
 
     constructor() {
         makeAutoObservable(this);
+    }
+
+    setPagingParams = (pagingParams:PagingParams) => {
+        this.pagingParams = pagingParams;
+    }
+
+    get axiosParams() {
+        const params = new URLSearchParams();
+        params.append('pageNumber', this.pagingParams.pageNumber.toString());
+        params.append('pageSize', this.pagingParams.pageSize.toString());
+        return params;
     }
 
     get players() {
@@ -20,17 +34,21 @@ export default class PlayerStore {
     loadPlayers = async () => {
         this.setLoadingInitial(true);
         try {
-            const players = await agent.Players.list();
-            console.log(players)
-            players.forEach(player => {
+            const result = await agent.Players.list(this.axiosParams);
+            result.data.forEach(player => {
                 this.setPlayer(player)
             })
+            this.setPagination(result.pagination);
             this.setLoadingInitial(false);
         }
         catch (error) {
             console.log(error);
             this.setLoadingInitial(false);
         }
+    }
+
+    setPagination = (pagination: Pagination) => {
+        this.pagination = pagination;
     }
 
     loadPlayer= async (id: string) => {

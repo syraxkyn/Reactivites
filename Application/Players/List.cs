@@ -5,6 +5,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain;
 using MediatR;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Persistence;
@@ -13,9 +14,12 @@ namespace Application.Players
 {
     public class List
     {
-        public class Query : IRequest<Result<List<PlayerDto>>> { }
+        public class Query : IRequest<Result<PagedList<PlayerDto>>> 
+        { 
+            public PagingParams Params { get; set; }
+        }
 
-        public class Handler : IRequestHandler<Query, Result<List<PlayerDto>>>
+        public class Handler : IRequestHandler<Query, Result<PagedList<PlayerDto>>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -25,13 +29,15 @@ namespace Application.Players
                 _context = context;
             }
 
-            public async Task<Result<List<PlayerDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<PagedList<PlayerDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var players = await _context.Players
+                var query = _context.Players
                 .ProjectTo<PlayerDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                .AsQueryable();
 
-                return Result<List<PlayerDto>>.Success(players);
+                return Result<PagedList<PlayerDto>>.Success(
+                    await PagedList<PlayerDto>.CreateAsync(query, request.Params.PageNumber, request.Params.PageSize)
+                );
             }
         }
     }

@@ -1,13 +1,11 @@
 import { useStore } from '../../../app/stores/store';
 import { observer } from 'mobx-react-lite';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import PlayerListItem from './PlayerListItem';
 
 export default observer(function PlayerList() {
     const { playerStore } = useStore();
-    const { players } = playerStore;
-    console.log(players)
-
+    const { players, loadPlayers } = playerStore;
     return (
         <>
             <Fragment>

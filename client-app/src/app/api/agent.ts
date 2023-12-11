@@ -7,6 +7,7 @@ import { User, UserFormValues } from '../models/user';
 import { Team, TeamFormValues } from '../models/team';
 import { Player, PlayerFormValues } from '../models/player';
 import { Match, MatchFormValues } from '../models/match';
+import { PaginatedResult } from '../models/pagination';
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -26,6 +27,11 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(async response => {
     await sleep(1000);
+    const pagination = response.headers['pagination'];
+    if (pagination) {
+        response.data = new PaginatedResult(response.data, JSON.parse(pagination))
+        return response as AxiosResponse<PaginatedResult<any>>
+    }
     return response;
 }, (error: AxiosError) => {
     const { data, status, config } = error.response as AxiosResponse;
@@ -98,7 +104,8 @@ const Matches = {
 }
 
 const Players = {
-    list: () => requests.get<Player[]>('/players'),
+    list: (params: URLSearchParams) => axios.get<PaginatedResult<Player[]>>('/players', { params })
+        .then(responseBody),
     details: (id: string) => requests.get<Player>(`/players/${id}`),
     create: (player: PlayerFormValues) => requests.post<void>('players', player),
     update: (player: PlayerFormValues) => requests.put<void>(`/players/${player.id}`, player),
