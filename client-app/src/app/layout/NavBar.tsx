@@ -3,7 +3,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { useStore } from '../stores/store';
 
 export default function NavBar() {
-    const { userStore: { user, logout } } = useStore();
+    const { userStore: { user, logout, isAdmin } } = useStore();
     return (
         <Menu inverted fixed='top'>
             <Container>
@@ -15,17 +15,20 @@ export default function NavBar() {
                 <Menu.Item as={NavLink} to='/players' name='Players' />
                 <Menu.Item as={NavLink} to='/matches' name='Matches' />
                 <Menu.Item as={NavLink} to='/errors' name='Errors' />
+                {isAdmin ? (<>
+                    <Menu.Item>
+                        <Button as={NavLink} to='/createTeam' positive content='Create Team' />
+                    </Menu.Item>
+                    <Menu.Item>
+                        <Button as={NavLink} to='/createPlayer' positive content='Create Player' />
+                    </Menu.Item>
+                    <Menu.Item>
+                        <Button as={NavLink} to='/createMatch' positive content='Create Match' />
+                    </Menu.Item>
+                </>
+                ) : null}
                 <Menu.Item>
                     <Button as={NavLink} to='/createPost' positive content='Create Post' />
-                </Menu.Item>
-                <Menu.Item>
-                    <Button as={NavLink} to='/createTeam' positive content='Create Team' />
-                </Menu.Item>
-                <Menu.Item>
-                    <Button as={NavLink} to='/createPlayer' positive content='Create Player' />
-                </Menu.Item>
-                <Menu.Item>
-                    <Button as={NavLink} to='/createMatch' positive content='Create Match' />
                 </Menu.Item>
                 <Menu.Item position='right'>
                     <Image src={user?.image || '/assets/user.png'} avatar spaced='right' />

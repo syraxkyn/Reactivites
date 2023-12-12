@@ -16,7 +16,8 @@ export default class UserStore {
     }
 
     get isAdmin() {
-        return this.user?.role=='admin';
+        console.log(this.user)
+        return this.user?.role=='Admin';
     }
 
     login = async (creds: UserFormValues) => {
@@ -26,6 +27,8 @@ export default class UserStore {
             runInAction(() => this.user = user);
             router.navigate('/activities');
             store.modalStore.closeModal();
+            console.log('asdas')
+            console.log(user)
         } catch (error) {
             console.log(error)
             throw error;

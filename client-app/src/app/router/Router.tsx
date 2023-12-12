@@ -17,6 +17,7 @@ import MatchDashboard from "../../features/matches/dashboard/MatchDashboard";
 import MatchDetails from "../../features/matches/details/MatchDetails";
 import MatchForm from "../../features/matches/form/MatchForm";
 import RequireAuth from "./RequireAuth";
+import RequireAdmin from "./RequireAdmin";
 
 export const routes: RouteObject[] = [
     {
@@ -30,23 +31,29 @@ export const routes: RouteObject[] = [
                     { path: 'createPost', element: <PostForm key='create' /> },
                     { path: 'players', element: <PlayerDashboard /> },
                     { path: 'players/:id', element: <PlayerDetails /> },
-                    { path: 'createPlayer', element: <PlayerForm key='create' /> },
+                    // { path: 'createPlayer', element: <PlayerForm key='create' /> },
                     { path: 'matches', element: <MatchDashboard /> },
                     { path: 'matches/:id', element: <MatchDetails /> },
-                    { path: 'createMatch', element: <MatchForm key='create' /> },
+                    // { path: 'createMatch', element: <MatchForm key='create' /> },
                     { path: 'teams', element: <TeamDashboard /> },
                     { path: 'teams/:id', element: <TeamDetails /> },
-                    { path: 'createTeam', element: <TeamForm key='create' /> },
+                    // { path: 'createTeam', element: <TeamForm key='create' /> },
                     { path: 'managePost/:id', element: <PostForm key='manage' /> },
                     { path: 'login', element: <LoginForm /> },
                     { path: 'errors', element: <TestErrors /> },
                     { path: 'not-found', element: <NotFound /> },
                     { path: 'server-error', element: <ServerError /> },
+                    {
+                        element: <RequireAdmin />,
+                        children: [
+                            { path: 'createPlayer', element: <PlayerForm key='create' /> },
+                            { path: 'createMatch', element: <MatchForm key='create' /> },
+                            { path: 'createTeam', element: <TeamForm key='create' /> },
+                        ]
+                    },
                     { path: '*', element: <Navigate replace to='/not-found' /> },
                 ]
             }
-
-
         ]
     }
 ]
