@@ -19,7 +19,6 @@ namespace API.Controllers
         {
             _tokenService = tokenService;
             _userManager = userManager;
-
         }
 
         [AllowAnonymous]
@@ -27,14 +26,19 @@ namespace API.Controllers
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
-
             if (user == null) return Unauthorized();
-
+            // var role = await _userManager.GetRolesAsync(user);
+            // string roleName = role[0];
+            // AppRole userRole = await _roleManager.FindByNameAsync(roleName);
             var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
-
             if (result)
             {
-                return CreateUserObject(user);
+                var roles = await _userManager.GetRolesAsync(user);
+                //user.Role = userRole;
+                Console.WriteLine("user ok");
+                Console.WriteLine(user.Email);
+                string userRole = roles[0];
+                return CreateUserObject(user, userRole);
             }
 
             return Unauthorized();
@@ -64,10 +68,10 @@ namespace API.Controllers
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
-
+            await _userManager.AddToRoleAsync(user, "User");
             if (result.Succeeded)
             {
-                return CreateUserObject(user);
+                return CreateUserObject(user, "User");
             }
 
             return BadRequest(result.Errors);
@@ -78,17 +82,19 @@ namespace API.Controllers
         public async Task<ActionResult<UserDto>> GetCurrentUser()
         {
             var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
-
-            return CreateUserObject(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            string userRole = roles[0];
+            return CreateUserObject(user, userRole);
         }
 
-        private UserDto CreateUserObject(AppUser user)
+        private UserDto CreateUserObject(AppUser user, string role)
         {
             return new UserDto
             {
                 DisplayName = user.DisplayName,
                 Image = null,
-                Token = _tokenService.CreateToken(user),
+                Role = role,
+                Token = _tokenService.CreateToken(user, role),
                 Username = user.UserName
             };
         }

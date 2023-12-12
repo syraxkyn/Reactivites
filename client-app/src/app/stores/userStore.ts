@@ -15,6 +15,10 @@ export default class UserStore {
         return !!this.user;
     }
 
+    get isAdmin() {
+        return this.user?.role=='admin';
+    }
+
     login = async (creds: UserFormValues) => {
         try {
             const user = await agent.Account.login(creds);

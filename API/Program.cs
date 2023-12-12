@@ -45,16 +45,19 @@ app.MapHub<MessageHub>("/messagesChat");
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 
-try{
+try
+{
     var context = services.GetRequiredService<DataContext>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
     await context.Database.MigrateAsync();
-    await Seed.SeedData(context, userManager);
+    await Seed.SeedData(context, userManager, roleManager);//, roleManager
+
 }
-catch(Exception ex)
+catch (Exception ex)
 {
     var logger = services.GetRequiredService<ILogger<Program>>();
-    logger.LogError(ex,"An error occured during migration");
+    logger.LogError(ex, "An error occured during migration");
 }
 
 

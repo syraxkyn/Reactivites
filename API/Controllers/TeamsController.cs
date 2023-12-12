@@ -10,6 +10,7 @@ namespace API.Controllers
     {
 
         [HttpGet]
+        [Authorize(Roles="Admin")]
         public async Task<IActionResult> GetTeams()
         {
             return HandleResult(await Mediator.Send(new List.Query()));
@@ -22,6 +23,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles="Admin")]
         public async Task<IActionResult> CreateTeam([FromBody] Team team)
         {   
             return HandleResult( await Mediator.Send(new Create.Command { Team = team }));
