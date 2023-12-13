@@ -1,7 +1,7 @@
 using Domain;
 using FluentValidation;
 
-namespace Application.Matches
+namespace Application.Results
 {
     public class MatchValidator:AbstractValidator<Match>
     {

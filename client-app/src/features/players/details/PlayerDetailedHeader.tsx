@@ -52,7 +52,7 @@ export default observer(function PlayerDetailedHeader({ player }: Props) {
                             to={`/managePlayer/${player.id}`}
                             color='orange'
                             floated='right'>
-                            Edit Player
+                            Редактировать
                         </Button>
                         <Button
                             name= {player.id}
@@ -60,7 +60,7 @@ export default observer(function PlayerDetailedHeader({ player }: Props) {
                             onClick={(e)=>handlePlayerDelete(e,player.id)}
                             floated='right'
                             color='red'
-                            content='Delete'
+                            content='Удалить'
                         />
                     </>
                 ) : <></>}

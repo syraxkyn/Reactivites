@@ -23,9 +23,9 @@ export default observer(function MatchForm() {
     const [match, setMatch] = useState<MatchFormValues>(new MatchFormValues());
 
     const validationScheme = Yup.object({
-        FirstTeamId: Yup.string().required('The post title is required').notOneOf([Yup.ref('SecondTeamId')], 'FirstTeamId should not be equal to SecondTeamId'),
-        SecondTeamId: Yup.string().required('The text is required'),
-        date: Yup.string().required()
+        FirstTeamId: Yup.string().required('Необходимо выбрать первую команду').notOneOf([Yup.ref('SecondTeamId')], 'Команда не может играть сама с собой'),
+        SecondTeamId: Yup.string().required('Необходимо выбрать вторую команду'),
+        date: Yup.string().required('Выберите дату')
     })
 
     useEffect(() => {
@@ -43,8 +43,6 @@ export default observer(function MatchForm() {
                 secondTeamName: 'okay',
                 id: uuid()
             };
-            console.log('new match')
-            console.log(newMatch)
             createMatch(newMatch).then(() => navigate(`/matches`))
         }
         else {
@@ -52,12 +50,12 @@ export default observer(function MatchForm() {
         }
     }
     
-    if (teamStore.loadingInitial) return <LoadingComponent content='Loading teams...' />
-    if (loadingInitial) return <LoadingComponent content='Loading match...' />
+    if (teamStore.loadingInitial) return <LoadingComponent content='Загрузка команд...' />
+    if (loadingInitial) return <LoadingComponent content='Загрузка матча...' />
 
     return (
         <Segment clearing>
-            <Header content='Match Details' color='teal' />
+            <Header content='Данные матча' color='teal' />
             <Formik
                 validationSchema={validationScheme}
                 enableReinitialize
@@ -65,10 +63,10 @@ export default observer(function MatchForm() {
                 onSubmit={values => handleFormSubmit(values)}>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
-                        <MySelectInput options={teamOptions} placeholder='Team' name='FirstTeamId' />
-                        <MySelectInput options={teamOptions} placeholder='Team' name='SecondTeamId' />
+                        <MySelectInput options={teamOptions} placeholder='Первая команда' name='FirstTeamId' />
+                        <MySelectInput options={teamOptions} placeholder='Вторая команда' name='SecondTeamId' />
                         <MyDateInput
-                            placeholderText='Date'
+                            placeholderText='Дата матча'
                             name='date'
                             showTimeSelect
                             timeCaption='time'

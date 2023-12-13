@@ -21,8 +21,8 @@ export default observer(function PostForm() {
     const [post, setPost] = useState<PostFormValues>(new PostFormValues());
 
     const validationScheme = Yup.object({
-        title: Yup.string().required('The post title is required'),
-        text: Yup.string().required('The text is required'),
+        title: Yup.string().required('Необходимо ввести заголовок новости'),
+        text: Yup.string().required('Необходимо ввести текст новости'),
         // date: Yup.string().required()
     })
 
@@ -44,11 +44,11 @@ export default observer(function PostForm() {
         }
     }
 
-    if (loadingInitial) return <LoadingComponent content='Loading post...' />
+    if (loadingInitial) return <LoadingComponent content='Загрузка новости...' />
 
     return (
         <Segment clearing>
-            <Header content='Post Details' color='teal' />
+            <Header content='Детали публикации' color='teal' />
             <Formik
                 validationSchema={validationScheme}
                 enableReinitialize
@@ -56,16 +56,16 @@ export default observer(function PostForm() {
                 onSubmit={values => handleFormSubmit(values)}>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
-                        <MyTextInput name='title' placeholder='Title' />
-                        <MyTextArea rows={3} placeholder='Text' name='text' />
+                        <MyTextInput name='title' placeholder='Заголовок' />
+                        <MyTextArea rows={3} placeholder='Текст' name='text' />
                         <Button
                             disabled={isSubmitting || !dirty || !isValid}
                             loading={isSubmitting}
                             floated='right'
                             positive type='submit'
-                            content='Submit'
+                            content='Опубликовать'
                         />
-                        <Button as={Link} to='/posts' floated='right' type='button' content='Cancel' />
+                        <Button as={Link} to='/posts' floated='right' type='button' content='Отмена' />
                     </Form>
                 )}
             </Formik>

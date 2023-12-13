@@ -37,26 +37,24 @@ export default observer(function PostDetailedHeader({ post }: Props) {
                                     size='huge'
                                     content={post.title}
                                 />
-                                <br/>
                                 <span>
                                     {format(post.date!, 'dd MMM yyyy h:mm aa')}
                                 </span>
-                            </Item.Content>
-                        </Item>
-                    </Item.Group>
-                </Segment>
-            </Segment>
-            <Segment clearing attached='bottom'>
-                {post.isHost ? (
+                                {post.isHost ? (
                     <>
                         <Button as={Link}
                             to={`/managePost/${post.id}`}
                             color='orange'
                             floated='right'>
-                            Edit Post
+                            Изменить
                         </Button>
                     </>
                 ) : <></>}
+                            </Item.Content>
+                            
+                        </Item>
+                    </Item.Group>
+                </Segment>
             </Segment>
         </Segment.Group>
     )

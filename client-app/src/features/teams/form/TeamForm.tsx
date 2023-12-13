@@ -20,7 +20,7 @@ export default observer(function TeamForm() {
     const [post, setPost] = useState<TeamFormValues>(new TeamFormValues());
 
     const validationScheme = Yup.object({
-        name: Yup.string().required('The name is required')
+        name: Yup.string().required('Необходимо ввести название команды')
     })
 
     useEffect(() => {
@@ -40,11 +40,11 @@ export default observer(function TeamForm() {
         // }
     }
 
-    if (loadingInitial) return <LoadingComponent content='Loading team...' />
+    if (loadingInitial) return <LoadingComponent content='Загрузка игрока...' />
 
     return (
         <Segment clearing>
-            <Header content='Team Details' color='teal' />
+            <Header content='Данные команды' color='teal' />
             <Formik
                 validationSchema={validationScheme}
                 enableReinitialize
@@ -52,15 +52,15 @@ export default observer(function TeamForm() {
                 onSubmit={values => handleFormSubmit(values)}>
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
-                        <MyTextInput name='name' placeholder='name' />
+                        <MyTextInput name='name' placeholder='Имя' />
                         <Button
                             disabled={isSubmitting || !dirty || !isValid}
                             loading={isSubmitting}
                             floated='right'
                             positive type='submit'
-                            content='Submit'
+                            content='Создать'
                         />
-                        <Button as={Link} to='/teams' floated='right' type='button' content='Cancel' />
+                        <Button as={Link} to='/teams' floated='right' type='button' content='Отмена' />
                     </Form>
                 )}
             </Formik>

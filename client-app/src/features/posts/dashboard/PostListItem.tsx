@@ -33,7 +33,7 @@ export default function PostListItem({ post }: Props) {
                             {post.isHost && (
                                 <Item.Description>
                                     <Label basic color='orange'>
-                                        You created this post
+                                        Вы опубликовали данную новость
                                     </Label>
                                 </Item.Description>
                             )}
