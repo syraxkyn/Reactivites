@@ -17,22 +17,22 @@ export default observer(function PlayerFilters() {
                 />
                 <Menu.Item
                     content="Нападающий"
-                    active={predicate.has('Attacker')}
+                    active={predicate.get('Position') == "attacker"}
                     onClick={() => setPredicate('Attacker', 'true')}
                 />
                 <Menu.Item
                     content="Полузащитник"
-                    active={predicate.has('Midfielder')}
+                    active={predicate.get('Position') == "midfielder"}
                     onClick={() => setPredicate('Midfielder', 'true')}
                 />
                 <Menu.Item
                     content="Защитник"
-                    active={predicate.has('Defender')}
+                    active={predicate.get('Position') == "defender"}
                     onClick={() => setPredicate('Defender', 'true')}
                 />
                 <Menu.Item
                     content="Вратарь"
-                    active={predicate.has('Goalkeeper')}
+                    active={predicate.get('Position') == "goalkeeper"}
                     onClick={() => setPredicate('Goalkeeper', 'true')}
                 />
             </Menu>
