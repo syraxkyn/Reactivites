@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Player, PlayerFormValues } from "../models/player";
 import { Pagination, PagingParams } from "../models/pagination";
@@ -11,19 +11,62 @@ export default class PlayerStore {
     loadingInitial = false;
     pagination: Pagination | null = null;
     pagingParams = new PagingParams();
+    predicate = new Map().set('all', true);
 
     constructor() {
         makeAutoObservable(this);
+
+        reaction(
+            () => this.predicate.keys(),
+            () => {
+                this.pagingParams = new PagingParams();
+                this.playerRegistry.clear();
+                this.loadPlayers();
+            }
+        )
     }
 
-    setPagingParams = (pagingParams:PagingParams) => {
+    setPagingParams = (pagingParams: PagingParams) => {
         this.pagingParams = pagingParams;
+    }
+
+    setPredicate = (predicate: string, value: string | Date) => {
+        const resetPredicate = () => {
+            this.predicate.forEach((value, key) =>{
+                this.predicate.delete(key);
+            })
+        }
+        switch (predicate) {
+            case 'All':
+                resetPredicate();
+                this.predicate.set('All', true);
+                break;
+            case 'Attacker':
+                resetPredicate();
+                this.predicate.set('Position', 'attacker');
+                break;
+            case 'Midfielder':
+                resetPredicate();
+                this.predicate.set('Position', 'midfielder');
+                break;
+            case 'Defender':
+                resetPredicate();
+                this.predicate.set('Position', 'defender');
+                break;
+            case 'Goalkeeper':
+                resetPredicate();
+                this.predicate.set('Position', 'goalkeeper');
+                break;
+        }
     }
 
     get axiosParams() {
         const params = new URLSearchParams();
         params.append('pageNumber', this.pagingParams.pageNumber.toString());
         params.append('pageSize', this.pagingParams.pageSize.toString());
+        this.predicate.forEach((value, key) => {
+            params.append(key, value);
+        })
         return params;
     }
 
@@ -51,7 +94,7 @@ export default class PlayerStore {
         this.pagination = pagination;
     }
 
-    loadPlayer= async (id: string) => {
+    loadPlayer = async (id: string) => {
         let player = this.getPlayer(id);
         if (player) {
             this.selectedPlayer = player
@@ -115,7 +158,7 @@ export default class PlayerStore {
         }
     }
 
-    deletePlayer= async (id: string) => {
+    deletePlayer = async (id: string) => {
         this.loading = true;
         try {
             await agent.Players.delete(id);

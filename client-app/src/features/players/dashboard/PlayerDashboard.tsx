@@ -6,6 +6,8 @@ import LoadingComponent from '../../../app/layout/LoadingComponent';
 import PlayerList from './PlayerList';
 import { PagingParams } from '../../../app/models/pagination';
 import InfiniteScroll from 'react-infinite-scroller';
+import PlayerListItemPlaceholder from './PlayerListItemPlaceholder';
+import PlayerFilters from './PlayerFilters';
 
 export default observer(function PlayerDashboard() {
 
@@ -41,22 +43,28 @@ export default observer(function PlayerDashboard() {
     // }
 
     useEffect(() => {
-        if (playerRegistry.size <= 1) loadPlayers();
+        loadPlayers();
     }, [playerRegistry.size, loadPlayers])
-
-    if (playerStore.loadingInitial && !loadingNext) return <LoadingComponent content='Loading players...' />
 
     return (
         <Grid>
             <Grid.Column width='10'>
-                <InfiniteScroll
-                    pageStart={0}
-                    loadMore={handleGetNext}
-                    hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
-                    initialLoad={false}
-                >
-                    <PlayerList />
-                </InfiniteScroll>
+                {playerStore.loadingInitial && playerRegistry.size === 0 && !loadingNext ? (
+                    <>
+                    </>
+                ) : (
+                    <InfiniteScroll
+                        pageStart={0}
+                        loadMore={handleGetNext}
+                        hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
+                        initialLoad={false}
+                    >
+                        <PlayerList />
+                    </InfiniteScroll>
+                )}
+            </Grid.Column>
+            <Grid.Column width={6}>
+                <PlayerFilters />
             </Grid.Column>
             <Grid.Column width={10}>
                 <Loader active={loadingNext} />
