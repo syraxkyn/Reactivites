@@ -61,11 +61,6 @@ export default class TeamStore {
     }
 
     private setTeam = (team: Team) => {
-        const user = store.userStore.user;
-        // if (user) {
-        //     team.isHost = team.hostUsername === user.username;
-        //     // post.host = activity.attendees?.find(x => x.username === post.hostUsername);
-        // }
         runInAction(() => {
             let players = team.players;
             if (team.players?.length != 0) {
@@ -81,11 +76,11 @@ export default class TeamStore {
                     if (!prevPlayer) {
                         return currentPlayer;
                     }
-                    return (prevPlayer.assists !== undefined && currentPlayer.assists !== undefined && prevPlayer.assists > currentPlayer.assists)
+                    return (prevPlayer.assists !== undefined && currentPlayer.goals !== undefined && prevPlayer.goals > currentPlayer.goals)
                         ? prevPlayer
                         : currentPlayer;
                 });
-
+                console.log(bestGoalScorer)
                 team.bestAssistant = bestAssistant;
                 team.bestGoalScorer = bestGoalScorer;
             }

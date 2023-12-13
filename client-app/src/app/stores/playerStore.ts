@@ -2,6 +2,7 @@ import { makeAutoObservable, reaction, runInAction } from "mobx";
 import agent from "../api/agent";
 import { Player, PlayerFormValues } from "../models/player";
 import { Pagination, PagingParams } from "../models/pagination";
+import { store } from "./store";
 
 export default class PlayerStore {
     playerRegistry = new Map<string, Player>();
@@ -32,7 +33,7 @@ export default class PlayerStore {
 
     setPredicate = (predicate: string, value: string | Date) => {
         const resetPredicate = () => {
-            this.predicate.forEach((value, key) =>{
+            this.predicate.forEach((value, key) => {
                 this.predicate.delete(key);
             })
         }
@@ -131,11 +132,13 @@ export default class PlayerStore {
 
     createPlayer = async (player: PlayerFormValues) => {
         try {
+            const team = store.teamStore;
             await agent.Players.create(player);
             const newPlayer = new Player(player);
             this.setPlayer(newPlayer);
             runInAction(() => {
                 this.selectedPlayer = newPlayer;
+                team.loadTeams()
             })
         }
         catch (error) {
@@ -145,13 +148,15 @@ export default class PlayerStore {
 
     updatePlayer = async (player: PlayerFormValues) => {
         try {
-            await agent.Teams.update(player);
+            const team = store.teamStore;
+            await agent.Players.update(player);
             runInAction(() => {
                 if (player.id) {
                     const updatedPlayer = { ...this.getPlayer(player.id), ...player }
                     this.playerRegistry.set(player.id, updatedPlayer as Player)
                     this.selectedPlayer = updatedPlayer as Player;
                 }
+                team.loadTeams()
             })
         } catch (error) {
             console.log(error)
@@ -161,10 +166,12 @@ export default class PlayerStore {
     deletePlayer = async (id: string) => {
         this.loading = true;
         try {
+            const team = store.teamStore;
             await agent.Players.delete(id);
             runInAction(() => {
                 this.playerRegistry.delete(id);
                 this.loading = false;
+                team.loadTeams()
             })
         } catch (error) {
             console.log(error)

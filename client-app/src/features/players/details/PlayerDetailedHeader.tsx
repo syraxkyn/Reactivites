@@ -1,7 +1,9 @@
 import { observer } from 'mobx-react-lite';
-import { Header, Item, Segment } from 'semantic-ui-react'
+import { Button, Header, Item, Segment } from 'semantic-ui-react'
 import { useStore } from '../../../app/stores/store';
 import { Player } from '../../../app/models/player';
+import { SyntheticEvent, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const postImageStyle = {
     filter: 'brightness(30%)'
@@ -21,6 +23,17 @@ interface Props {
 }
 
 export default observer(function PlayerDetailedHeader({ player }: Props) {
+    const { userStore: { isAdmin }, playerStore } = useStore();
+    const { deletePlayer, loading } = playerStore;
+    const navigate = useNavigate()
+
+    const[target, setTarget] = useState('');
+
+    function handlePlayerDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
+        setTarget(e.currentTarget.name);
+        deletePlayer(id);
+        navigate(`/players`)
+    }
     return (
         <Segment.Group>
             <Segment clearing attached='top' style={{ padding: '30' }}>
@@ -33,21 +46,27 @@ export default observer(function PlayerDetailedHeader({ player }: Props) {
                                     content={player.name}
                                 />
                             </Item.Content>
+                            {isAdmin ? (
+                    <>
+                        <Button as={Link}
+                            to={`/managePlayer/${player.id}`}
+                            color='orange'
+                            floated='right'>
+                            Edit Player
+                        </Button>
+                        <Button
+                            name= {player.id}
+                            loading={loading && target === player.id}
+                            onClick={(e)=>handlePlayerDelete(e,player.id)}
+                            floated='right'
+                            color='red'
+                            content='Delete'
+                        />
+                    </>
+                ) : <></>}
                         </Item>
                     </Item.Group>
                 </Segment>
-            </Segment>
-            <Segment clearing attached='bottom'>
-                {/* {post.isHost ? (
-                    <>
-                        <Button as={Link}
-                            to={`/manage/${post.id}`}
-                            color='orange'
-                            floated='right'>
-                            Edit Post
-                        </Button>
-                    </>
-                ) : <></>} */}
             </Segment>
         </Segment.Group>
     )

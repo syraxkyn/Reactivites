@@ -25,9 +25,6 @@ export default observer(function PlayerDetails() {
         <PlayerDetailedHeader player={player}/>
         <PlayerDetailedInfo player={player}/>
       </Grid.Column>
-      <Grid.Column width={6}>
-        <PlayerDetailedHeader player={player}/>
-      </Grid.Column>
     </Grid>
   )
 })

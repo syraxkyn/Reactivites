@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Item, Segment } from 'semantic-ui-react'
+import { Button, Item, Segment } from 'semantic-ui-react'
 import { useStore } from '../../../app/stores/store';
 import { Player } from '../../../app/models/player';
 
@@ -9,7 +9,6 @@ interface Props {
 }
 
 export default function PlayerListItem({ player }: Props) {
-
     const { playerStore } = useStore();
     // const { deletePost, loading } = postStore;
     const [target, setTarget] = useState('');

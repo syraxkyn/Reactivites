@@ -49,6 +49,9 @@ export const routes: RouteObject[] = [
                             { path: 'createPlayer', element: <PlayerForm key='create' /> },
                             { path: 'createMatch', element: <MatchForm key='create' /> },
                             { path: 'createTeam', element: <TeamForm key='create' /> },
+                            { path: 'managePlayer/:id', element: <PlayerForm key='manage' /> },
+                            { path: 'manageMatch/:id', element: <MatchForm key='manage' /> },
+                            { path: 'manageTeam/:id', element: <TeamForm key='manage' /> },
                         ]
                     },
                     { path: '*', element: <Navigate replace to='/not-found' /> },
