@@ -16,6 +16,7 @@ namespace Persistence
         public DbSet<Team> Teams { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Match> Matches { get; set; }
+        public DbSet<Result> Results {get;set;}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
