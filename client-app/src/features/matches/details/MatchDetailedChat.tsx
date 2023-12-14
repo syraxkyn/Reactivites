@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Segment, Header, Comment, Loader } from 'semantic-ui-react'
 import { useStore } from '../../../app/stores/store';
 import { Link } from 'react-router-dom';
@@ -13,6 +13,7 @@ interface Props {
 
 export default observer(function MatchDetailedChat({ matchId }: Props) {
     const { messageStore } = useStore();
+    const [canSubmit, setCanSubmit] = useState(true);
 
     useEffect(() => {
         if (matchId) {
@@ -32,12 +33,18 @@ export default observer(function MatchDetailedChat({ matchId }: Props) {
                 color='teal'
                 style={{ border: 'none' }}
             >
-                <Header>Comment this post</Header>
+                <Header>Отправьте сообщение</Header>
             </Segment>
             <Segment attached clearing>
                 <Formik
-                    onSubmit={(values, { resetForm }) =>
-                        messageStore.addMessage(values).then(() => resetForm())}
+                    onSubmit={(values, { resetForm }) => {
+                        setCanSubmit(false);
+                        messageStore.addMessage(values).then(() => resetForm()).then(() => {
+                            setTimeout(() => {
+                                setCanSubmit(true);
+                            }, 5000);
+                        });
+                    }}
                     initialValues={{ body: '' }}
                     validationSchema={Yup.object({
                         body: Yup.string().required()
@@ -50,7 +57,8 @@ export default observer(function MatchDetailedChat({ matchId }: Props) {
                                     <div style={{ position: 'relative' }}>
                                         <Loader active={isSubmitting} />
                                         <textarea
-                                            placeholder='Enter your comment (Enter to submit, SHIFT + enter for new line)'
+                                            disabled={!canSubmit}
+                                            placeholder='Введите свое сообщение (Enter для отправки, SHIFT + enter для новой линии)'
                                             rows={2}
                                             {...props.field}
                                             onKeyDown={e => {
@@ -59,7 +67,17 @@ export default observer(function MatchDetailedChat({ matchId }: Props) {
                                                 }
                                                 if (e.key === 'Enter' && !e.shiftKey) {
                                                     e.preventDefault();
-                                                    isValid && handleSubmit();
+                                                    const textarea = e.target as HTMLTextAreaElement;
+                                                    const value = textarea.value;
+                                                    const selectionStart = textarea.selectionStart || 0;
+                                                    const selectionEnd = textarea.selectionEnd || 0;
+                                                    const before = value.substring(0, selectionStart);
+                                                    const after = value.substring(selectionEnd);
+                                                    const newValue = `${before}\n${after}`;
+
+                                                    if (!newValue.includes('\n\n')) {
+                                                        isValid && handleSubmit();
+                                                    }
                                                 }
                                             }}
                                         />

@@ -8,11 +8,9 @@ import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import MyTextInput from '../../../app/common/form/MyTextInput';
-import { TeamFormValues } from '../../../app/models/team';
 import { PlayerFormValues } from '../../../app/models/player';
 import MySelectInput from '../../../app/common/form/MySelectInput';
 import { positionOptions } from '../../../app/common/options/positionOptions';
-import teamStore from '../../../app/stores/teamStore';
 
 export default observer(function PlayerForm() {
     const { playerStore, teamStore } = useStore();
@@ -25,15 +23,15 @@ export default observer(function PlayerForm() {
     const [player, setPlayer] = useState<PlayerFormValues>(new PlayerFormValues());
 
     const validationSchemeForCreation = Yup.object({
-        name: Yup.string().required('Необходимо ввести имя'),
+        name: Yup.string().trim().required('Необходимо ввести имя'),
         position: Yup.string().required('Необходимо выбрать позицию'),
         TeamId: Yup.string().required('Необходимо выбрать команду')
     })
 
     const validationSchemeForUpdating = Yup.object({
-        name: Yup.string().required('Необходимо ввести имя'),
-        goals: Yup.string().required('Необходимо ввести голы'),
-        assists: Yup.string().required('Необходимо ввести голевые передачи')
+        name: Yup.string().trim().required('Необходимо ввести имя'),
+        goals: Yup.number().required('Необходимо ввести голы'),
+        assists: Yup.number().required('Необходимо ввести голевые передачи')
     })
 
     useEffect(() => {
@@ -94,8 +92,8 @@ export default observer(function PlayerForm() {
                     {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                         <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
                             <MyTextInput name='name' placeholder='Имя' />
-                            <MyTextInput name='goals' placeholder='Голы'/>
-                            <MyTextInput name='assists' placeholder='Ассисты'/>
+                            <MyTextInput name='goals' placeholder='Голы' type='number'/>
+                            <MyTextInput name='assists' placeholder='Ассисты' type='number'/>
                             <Button
                                 disabled={isSubmitting || !dirty || !isValid}
                                 loading={isSubmitting}

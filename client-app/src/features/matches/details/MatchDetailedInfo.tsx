@@ -22,12 +22,12 @@ console.log(match.firstTeamName)
                             <p>Команда 2: {match.secondTeamName}</p>
                         </Segment>
                     </Container>
-                    <Grid.Column width={1}>
+                    {/* <Grid.Column width={1}>
                         <Icon size='large' color='teal' name='info' />
-                    </Grid.Column>
-                    <Grid.Column width={15}>
+                    </Grid.Column> */}
+                    {/* <Grid.Column width={15}>
                         {match.id}
-                    </Grid.Column>
+                    </Grid.Column> */}
                 </Grid>
             </Segment>
         </Segment.Group>

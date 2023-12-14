@@ -24,10 +24,9 @@ export default function MatchListItem({ match }: Props) {
             <Segment>
                 <Item.Group>
                     <Item>
-                        <Item.Image style={{marginBottom: 3}}size='tiny' circular src='/assets/user.png' />
                         <Item.Content>
                             <Item.Header as={Link} to={`/matches/${match.id}`}>
-                                {match.id}
+                                {match.firstTeamName} - {match.secondTeamName}
                             </Item.Header>
                         </Item.Content>
                     </Item>
@@ -42,7 +41,7 @@ export default function MatchListItem({ match }: Props) {
                     to={`/matches/${match.id}`}
                     color='teal'
                     floated='right'
-                    content='View'
+                    content='Подробнее'
                 />
             </Segment>
         </Segment.Group>

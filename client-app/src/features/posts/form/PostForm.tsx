@@ -21,8 +21,8 @@ export default observer(function PostForm() {
     const [post, setPost] = useState<PostFormValues>(new PostFormValues());
 
     const validationScheme = Yup.object({
-        title: Yup.string().required('Необходимо ввести заголовок новости'),
-        text: Yup.string().required('Необходимо ввести текст новости'),
+        title: Yup.string().trim().required('Необходимо ввести заголовок новости'),
+        text: Yup.string().trim().required('Необходимо ввести текст новости'),
         // date: Yup.string().required()
     })
 
@@ -34,7 +34,7 @@ export default observer(function PostForm() {
         if (!post.id) {
             let newPost = {
                 ...post,
-                date: new Date(), // Это устанавливает текущую дату и время
+                date: new Date(),
                 id: uuid()
             };
             createPost(newPost).then(() => navigate(`/posts/${newPost.id}`))

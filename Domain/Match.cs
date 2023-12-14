@@ -10,6 +10,7 @@ namespace Domain
         public Team SecondTeam { get; set; }
         public int GoalsScoredFirstTeam { get; set; } = 0;
         public int GoalsScoredSecondTeam { get; set; } = 0;
+        public bool Ended{get;set;} = false;
         public ICollection<Message> Messages { get; set; } = new List<Message>();
     }
 }

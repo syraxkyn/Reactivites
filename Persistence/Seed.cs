@@ -20,11 +20,6 @@ namespace Persistence
                     }
                 }
 
-                // foreach (var role in roles)
-                // {
-                //     await roleManager.CreateAsync(role);
-                // }
-
                 var users = new List<AppUser>
                 {
                     new AppUser
@@ -107,7 +102,8 @@ namespace Persistence
                         FirstTeam = teams[0],
                         SecondTeam = teams[1],
                         GoalsScoredFirstTeam = 3,
-                        GoalsScoredSecondTeam = 4
+                        GoalsScoredSecondTeam = 4,
+                        Ended = true
                     }
                 };
 

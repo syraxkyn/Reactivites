@@ -5,6 +5,7 @@ import { v4 as uuid } from 'uuid';
 import { format } from 'date-fns'
 import { store } from "./store";
 import { Profile } from "../models/profile";
+import { toast } from "react-toastify";
 
 export default class PostStore {
     postRegistry = new Map<string, Post>();

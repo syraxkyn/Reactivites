@@ -35,8 +35,12 @@ axios.interceptors.response.use(async response => {
     return response;
 }, (error: AxiosError) => {
     const { data, status, config } = error.response as AxiosResponse;
+    console.log('status')
+    console.log(status)
     switch (status) {
         case 400:
+            console.log(data)
+            toast.error(data)
             if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
                 router.navigate('/not-found');
             }
