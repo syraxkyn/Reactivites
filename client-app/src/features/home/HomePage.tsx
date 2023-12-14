@@ -16,18 +16,17 @@ export default observer(function HomePage() {
                 </Header>
                 {userStore.isLoggedIn ? (
                     <>
-                        <Header as='h2' inverted content='Welcome to Footbik' />
                         <Button as={Link} to='/posts' size='huge' inverted>
-                            Go to football portal!
+                            Перейти на футбольный портал
                         </Button>
                     </>
                 ) : (
                     <>
                         <Button onClick={() => modalStore.openModal(<LoginForm />)} size='huge' inverted>
-                            Login!
+                            Логин
                         </Button>
                         <Button onClick={() => modalStore.openModal(<RegisterForm/>)} size='huge' inverted>
-                            Register!
+                            Регистрация
                         </Button>
                     </>
                 )}

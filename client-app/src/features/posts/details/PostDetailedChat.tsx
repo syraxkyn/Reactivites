@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Segment, Header, Comment,  Loader } from 'semantic-ui-react'
 import { useStore } from '../../../app/stores/store';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,8 @@ interface Props {
 
 export default observer(function PostDetailedChat({ postId }: Props) {
     const { commentStore } = useStore();
-
+    const [canSubmit, setCanSubmit] = useState(true);
+    console.log(canSubmit);
     useEffect(() => {
         if (postId) {
             commentStore.createHubConnection(postId)
@@ -36,8 +37,14 @@ export default observer(function PostDetailedChat({ postId }: Props) {
             </Segment>
             <Segment attached clearing>
                 <Formik
-                    onSubmit={(values, { resetForm }) =>
-                        commentStore.addComment(values).then(() => resetForm())}
+                    onSubmit={(values, { resetForm }) =>{
+                        setCanSubmit(false);
+                        commentStore.addComment(values).then(() => resetForm()).then(()=>{
+                            setTimeout(() => {
+                                setCanSubmit(true);
+                            }, 5000);
+                        });
+                    }}
                     initialValues={{ body: '' }}
                     validationSchema={Yup.object({
                         body: Yup.string().required()
@@ -50,6 +57,7 @@ export default observer(function PostDetailedChat({ postId }: Props) {
                                     <div style={{ position: 'relative' }}>
                                         <Loader active={isSubmitting} />
                                         <textarea
+                                            disabled = {!canSubmit}
                                             placeholder='Enter your comment (Enter to submit, SHIFT + enter for new line)'
                                             rows={2}
                                             {...props.field}

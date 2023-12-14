@@ -23,11 +23,11 @@ export default observer(function RegisterForm() {
         >
             {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
                 <Form className='ui form error' onSubmit={handleSubmit} autoComplete="off">
-                    <Header as='h2' content='Sign up to Footbik' color='teal' textAlign="center" />
-                    <MyTextInput placeholder="Display Name" name='displayName' />
-                    <MyTextInput placeholder="Username" name='username' />
+                    <Header as='h2' content='Регистрация на Footbik' color='teal' textAlign="center" />
+                    <MyTextInput placeholder="Отображаемое имя" name='displayName' />
+                    <MyTextInput placeholder="Имя" name='username' />
                     <MyTextInput placeholder="Email" name='email' />
-                    <MyTextInput placeholder="Password" name='password' type='password' />
+                    <MyTextInput placeholder="Пароль" name='password' type='password' />
                     <ErrorMessage
                         name='error' render={() =>
                             <ValidationError errors={errors.error as unknown as string[]} />}

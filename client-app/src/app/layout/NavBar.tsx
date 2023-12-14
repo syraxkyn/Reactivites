@@ -15,14 +15,6 @@ export default function NavBar() {
                 <Menu.Item as={NavLink} to='/players' name='Игроки' />
                 <Menu.Item as={NavLink} to='/matches' name='Матчи' />
                 <Menu.Item as={NavLink} to='/errors' name='Errors' />
-                {isAdmin ? (<>
-                    <select class="ui dropdown">
-                        <option value="">Gender</option>
-                        <option value="1">Male</option>
-                        <option value="0">Female</option>
-                    </select>
-                </>
-                ) : null}
                 <Menu.Item>
                     <Button as={NavLink} to='/createPost' positive content='Опубликовать новость' />
                 </Menu.Item>

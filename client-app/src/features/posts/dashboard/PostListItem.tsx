@@ -50,7 +50,7 @@ export default function PostListItem({ post }: Props) {
                     to={`/posts/${post.id}`}
                     color='teal'
                     floated='right'
-                    content='View'
+                    content='Посмотреть'
                 />
             </Segment>
         </Segment.Group>
