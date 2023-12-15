@@ -1,7 +1,9 @@
 import { observer } from 'mobx-react-lite';
-import { Header, Item, Segment } from 'semantic-ui-react'
+import { Button, Header, Item, Segment } from 'semantic-ui-react'
 import { useStore } from '../../../app/stores/store';
 import { Team } from '../../../app/models/team';
+import { useNavigate } from 'react-router-dom';
+import { useState, SyntheticEvent } from 'react';
 
 const postImageStyle = {
     filter: 'brightness(30%)'
@@ -21,7 +23,18 @@ interface Props {
 }
 
 export default observer(function TeamDetailedHeader({ team }: Props) {
-    const { teamStore: { loading } } = useStore();
+    const { teamStore } = useStore();
+    const { userStore: { isAdmin } } = useStore();
+    const { deleteTeam, loading } = teamStore;
+    const navigate = useNavigate()
+
+    const[target, setTarget] = useState('');
+
+    function handleTeamDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
+        setTarget(e.currentTarget.name);
+        deleteTeam(id);
+        navigate(`/teams`)
+    }
     return (
         <Segment.Group>
             <Segment clearing attached='top' style={{ padding: '30' }}>
@@ -33,6 +46,16 @@ export default observer(function TeamDetailedHeader({ team }: Props) {
                                     size='huge'
                                     content={team.name}
                                 />
+                                {isAdmin ? (
+                                <Button
+                                    name={team.id}
+                                    loading={loading && target === team.id}
+                                    onClick={(e) => handleTeamDelete(e, team.id)}
+                                    floated='right'
+                                    color='red'
+                                    content='Удалить'
+                                />
+                            ):(null)}
                             </Item.Content>
                         </Item>
                     </Item.Group>

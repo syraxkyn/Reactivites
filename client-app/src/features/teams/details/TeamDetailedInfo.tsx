@@ -8,46 +8,39 @@ interface Props {
     team: Team
 }
 
-const tableData = [
-    { name: 'John', age: 15, gender: 'Male' },
-    { name: 'Amber', age: 40, gender: 'Female' },
-    { name: 'Leslie', age: 25, gender: 'Other' },
-    { name: 'Ben', age: 70, gender: 'Male' },
-  ]
 
-  
 function exampleReducer(state: any, action: any) {
     switch (action.type) {
-      case 'CHANGE_SORT':
-        if (state.column === action.column) {
-          return {
-            ...state,
-            data: state.data.slice().reverse(),
-            direction:
-              state.direction === 'ascending' ? 'descending' : 'ascending',
-          }
-        }
-  
-        return {
-          column: action.column,
-          data: _.sortBy(state.data, [action.column]),
-          direction: 'ascending',
-        }
-      default:
-        throw new Error()
+        case 'CHANGE_SORT':
+            if (state.column === action.column) {
+                return {
+                    ...state,
+                    data: state.data.slice().reverse(),
+                    direction:
+                        state.direction === 'ascending' ? 'descending' : 'ascending',
+                }
+            }
+
+            return {
+                column: action.column,
+                data: _.sortBy(state.data, [action.column]),
+                direction: 'ascending',
+            }
+        default:
+            throw new Error()
     }
-  }
+}
 
 export default function TeamDetailedInfo({ team }: Props) {
+    console.log('asasas')
+    if (team.players?.length == 0) return null
     const players = team.players?.slice()
     const [state, dispatch] = React.useReducer(exampleReducer, {
         column: null,
         data: players,
         direction: null,
-      })
-      const { column, data, direction } = state
-      console.log(state.data.slice()[0].name)
-
+    })
+    const { column, data, direction } = state
     return (
         <Segment.Group>
             <Segment attached='top'>
@@ -75,7 +68,7 @@ export default function TeamDetailedInfo({ team }: Props) {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        {data?.map(({id, name,position,goals,assists}) => (
+                        {data?.map(({ id, name, position, goals, assists }) => (
                             <Table.Row key={id}>
                                 <Table.Cell>{name}</Table.Cell>
                                 <Table.Cell>{position}</Table.Cell>

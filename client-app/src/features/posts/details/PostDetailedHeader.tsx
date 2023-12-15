@@ -41,17 +41,17 @@ export default observer(function PostDetailedHeader({ post }: Props) {
                                     {format(post.date!, 'dd MMM yyyy h:mm aa')}
                                 </span>
                                 {post.isHost ? (
-                    <>
-                        <Button as={Link}
-                            to={`/managePost/${post.id}`}
-                            color='orange'
-                            floated='right'>
-                            Изменить
-                        </Button>
-                    </>
-                ) : <></>}
+                                    <>
+                                        <Button as={Link}
+                                            to={`/managePost/${post.id}`}
+                                            color='orange'
+                                            floated='right'>
+                                            Изменить
+                                        </Button>
+                                    </>
+                                ) : <></>}
                             </Item.Content>
-                            
+
                         </Item>
                     </Item.Group>
                 </Segment>

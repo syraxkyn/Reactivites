@@ -95,22 +95,9 @@ namespace Persistence
                     }
                 };
 
-                var matches = new List<Match>
-                {
-                    new Match
-                    {
-                        FirstTeam = teams[0],
-                        SecondTeam = teams[1],
-                        GoalsScoredFirstTeam = 3,
-                        GoalsScoredSecondTeam = 4,
-                        Ended = true
-                    }
-                };
-
                 await context.Posts.AddRangeAsync(posts);
                 await context.Teams.AddRangeAsync(teams);
                 await context.Players.AddRangeAsync(players);
-                await context.Matches.AddRangeAsync(matches);
                 await context.SaveChangesAsync();
             }
         }

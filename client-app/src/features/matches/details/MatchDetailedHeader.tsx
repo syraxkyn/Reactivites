@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react'
+import React, { SyntheticEvent, useState } from 'react'
 import { Button, Header, Item, Segment, Image, Label, Grid, Icon } from 'semantic-ui-react'
 import { Post } from "../../../app/models/post";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import { useStore } from '../../../app/stores/store';
 import { act } from 'react-dom/test-utils';
@@ -26,7 +26,18 @@ interface Props {
 }
 
 export default observer(function MatchDetailedHeader({ match }: Props) {
-    const { matchStore: { loading } } = useStore();
+    const { matchStore: { loading,deleteMatch } } = useStore();
+    const { userStore: { isAdmin }, matchStore } = useStore();
+    const navigate = useNavigate()
+
+    const[target, setTarget] = useState('');
+
+    function handleMatchDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
+        setTarget(e.currentTarget.name);
+        deleteMatch(id);
+        navigate(`/posts`)
+    }
+
     return (
         <Segment.Group>
             <Segment clearing attached='top' style={{ padding: '30' }}>
@@ -38,11 +49,21 @@ export default observer(function MatchDetailedHeader({ match }: Props) {
                                     size='huge'
                                     content={match.id}
                                 />
-                                <br/>
+                                <br />
                                 <span>
                                     {format(match.date!, 'dd MMM yyyy h:mm aa')}
                                 </span>
                             </Item.Content>
+                            {isAdmin ? (
+                                <Button
+                                    name={match.id}
+                                    loading={loading && target === match.id}
+                                    onClick={(e) => handleMatchDelete(e, match.id)}
+                                    floated='right'
+                                    color='red'
+                                    content='Удалить'
+                                />
+                            ):(null)}
                         </Item>
                     </Item.Group>
                 </Segment>

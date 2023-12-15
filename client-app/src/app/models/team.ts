@@ -4,6 +4,9 @@ export interface ITeam {
   id: string;
   name: string;
   players?: Player[];
+  scoredGoals?: number;
+  concededGoals?: number;
+  points?:number;
 }
 
 export class Team implements ITeam {
@@ -17,6 +20,9 @@ export class Team implements ITeam {
   players?: Player[];
   bestGoalScorer?: Player
   bestAssistant?: Player
+  scoredGoals?: number;
+  concededGoals?: number;
+  points?:number;
 }
 
 export class TeamFormValues {

@@ -3,6 +3,8 @@ export interface IMatch {
   date: Date | null;
   firstTeamName: string;
   secondTeamName: string;
+  firstTeamid: string;
+  secondTeamid: string;
   goalsScoredFirstTeam?: number;
   goalsScoredSecondTeam?: number;
 }
@@ -13,12 +15,16 @@ export class Match implements IMatch {
     this.date = init.date
     this.firstTeamName = init.firstTeamName
     this.secondTeamName = init.secondTeamName
+    this.firstTeamid = init.firstTeamId
+    this.secondTeamid = init.secondTeamId
   }
 
   id: string;
   date: Date | null;
   firstTeamName: string;
   secondTeamName: string;
+  firstTeamid: string;
+  secondTeamid: string;
   goalsScoredFirstTeam?: number;
   goalsScoredSecondTeam?: number;
 }
@@ -28,6 +34,8 @@ export class MatchFormValues {
   date: Date | null = null;
   firstTeamName: string = '';
   secondTeamName: string = '';
+  firstTeamId?: string = undefined;
+  secondTeamId?: string = undefined;
 
   constructor(match?: MatchFormValues) {
     if (match) {
@@ -35,6 +43,8 @@ export class MatchFormValues {
       this.date = match.date;
       this.firstTeamName = match.firstTeamName;
       this.secondTeamName = match.secondTeamName;
+      this.firstTeamId = match.firstTeamId;
+      this.secondTeamId = match.secondTeamId;
     }
   }
 }

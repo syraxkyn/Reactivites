@@ -33,7 +33,7 @@ export default observer(function TeamForm() {
                 ...post,
                 id: uuid()
             };
-            createTeam(newTeam).then(() => navigate(`/teams/${newTeam.id}`))
+            createTeam(newTeam).then(() => navigate(`/teams`))
         }
         // else {
         //     updateTeam(team).then(() => navigate(`/teams/${team.id}`))

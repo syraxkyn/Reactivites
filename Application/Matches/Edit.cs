@@ -37,12 +37,44 @@ namespace Application.Matches
             {
                 var match = await _context.Matches.FindAsync(request.Match.Id);
                 if (match == null) return null;
+                var firstTeam = await _context.Teams.FindAsync(request.Match.FirstTeamId);
+                var secondTeam = await _context.Teams.FindAsync(request.Match.SecondTeamId);
+                if (firstTeam == null || secondTeam == null) return null;
+                if (match.Ended != true)
+                {
+                    //голы первой команды
+                    firstTeam.ScoredGoals += request.Match.GoalsScoredFirstTeam;
+                    firstTeam.ConcededGoals += request.Match.GoalsScoredSecondTeam;
+                    //голы второй команды
+                    secondTeam.ScoredGoals += request.Match.GoalsScoredSecondTeam;
+                    secondTeam.ConcededGoals += request.Match.GoalsScoredFirstTeam;
+                    if (firstTeam.ScoredGoals > secondTeam.ScoredGoals)
+                    {
+                        firstTeam.Points += 3;
+                    }
+                    if (secondTeam.ScoredGoals > firstTeam.ScoredGoals)
+                    {
+                        secondTeam.Points += 3;
+                    }
+                    if (secondTeam.ScoredGoals == firstTeam.ScoredGoals)
+                    {
+                        firstTeam.Points += 1;
+                        secondTeam.Points += 1;
+                    }
+                    _mapper.Map(request.Match, match);
+                    match.GoalsScoredFirstTeam = request.Match.GoalsScoredFirstTeam;
+                    match.GoalsScoredSecondTeam = request.Match.GoalsScoredSecondTeam;
 
-                _mapper.Map(request.Match, match);
+                    match.Ended = true;
 
-                var result = await _context.SaveChangesAsync() > 0;
+                    var result = await _context.SaveChangesAsync() > 0;
 
-                if(!result) return Result<Unit>.Failure("Failed to update match");
+                    if (!result) return Result<Unit>.Failure("Failed to update match");
+                }
+                else
+                {
+                    return Result<Unit>.Failure("Match is already ended");
+                }
 
                 return Result<Unit>.Success(Unit.Value);
             }

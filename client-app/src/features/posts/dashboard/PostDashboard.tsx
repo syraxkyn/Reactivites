@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import PostList from './PostList';
 import PostFilters from './PostFilters';
+import TournamentTable from './TournamentTable';
 
 export default observer(function PostDashboard() {
 
@@ -23,7 +24,7 @@ export default observer(function PostDashboard() {
                 <PostList />
             </Grid.Column>
             <Grid.Column width='6'>
-                <PostFilters/>
+                <TournamentTable/>
             </Grid.Column>
         </Grid>
     )
