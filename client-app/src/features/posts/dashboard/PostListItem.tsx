@@ -24,7 +24,7 @@ export default function PostListItem({ post }: Props) {
             <Segment>
                 <Item.Group>
                     <Item>
-                        <Item.Image style={{marginBottom: 3}}size='tiny' circular src='/assets/user.png' />
+                        {/* <Item.Image style={{marginBottom: 3}}size='tiny' circular src='/assets/user.png' /> */}
                         <Item.Content>
                             <Item.Header as={Link} to={`/posts/${post.id}`}>
                                 {post.title}

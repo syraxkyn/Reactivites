@@ -48,6 +48,9 @@ export default observer(function PostDetailedChat({ postId }: Props) {
                     initialValues={{ body: '' }}
                     validationSchema={Yup.object({
                         body: Yup.string().required()
+                            .required('Это поле обязательно для заполнения')
+                            .matches(/^.*\S.*$/, 'Строка не может состоять только из пробелов')
+                            .max(100, 'Максимальная длина 100 символов')
                     })}
                 >
                     {({ isSubmitting, isValid, handleSubmit }) => (

@@ -62,16 +62,6 @@ export default observer(function TeamDetailedHeader({ team }: Props) {
                 </Segment>
             </Segment>
             <Segment clearing attached='bottom'>
-                {/* {post.isHost ? (
-                    <>
-                        <Button as={Link}
-                            to={`/manage/${post.id}`}
-                            color='orange'
-                            floated='right'>
-                            Edit Post
-                        </Button>
-                    </>
-                ) : <></>} */}
             </Segment>
         </Segment.Group>
     )

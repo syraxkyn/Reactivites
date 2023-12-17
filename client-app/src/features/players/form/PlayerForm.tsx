@@ -47,10 +47,10 @@ export default observer(function PlayerForm() {
                 ...player,
                 id: uuid()
             };
-            createPlayer(newPlayer).then(() => navigate(`/players/${newPlayer.id}`))
+            createPlayer(newPlayer).then(() => navigate(`/players`))
         }
         else {
-            updatePlayer(player).then(() => navigate(`/players/${player.id}`))
+            updatePlayer(player).then(() => navigate(`/players`))
         }
     }
 

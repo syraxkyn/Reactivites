@@ -47,8 +47,11 @@ export default observer(function MatchDetailedChat({ matchId }: Props) {
                     }}
                     initialValues={{ body: '' }}
                     validationSchema={Yup.object({
-                        body: Yup.string().required()
-                    })}
+                        body: Yup.string()
+                            .required('Это поле обязательно для заполнения')
+                            .matches(/^.*\S.*$/, 'Строка не может состоять только из пробелов')
+                            .max(100, 'Максимальная длина 100 символов')
+                        })}
                 >
                     {({ isSubmitting, isValid, handleSubmit }) => (
                         <Form className='ui form'>

@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { Button, Header, Item, Segment } from 'semantic-ui-react'
+import { Button, Card, Header, Item, Segment } from 'semantic-ui-react'
 import { useStore } from '../../../app/stores/store';
 import { Player } from '../../../app/models/player';
 import { SyntheticEvent, useState } from 'react';
@@ -27,7 +27,7 @@ export default observer(function PlayerDetailedHeader({ player }: Props) {
     const { deletePlayer, loading } = playerStore;
     const navigate = useNavigate()
 
-    const[target, setTarget] = useState('');
+    const [target, setTarget] = useState('');
 
     function handlePlayerDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
         setTarget(e.currentTarget.name);
@@ -41,29 +41,36 @@ export default observer(function PlayerDetailedHeader({ player }: Props) {
                     <Item.Group>
                         <Item>
                             <Item.Content>
-                                <Header
-                                    size='huge'
-                                    content={player.name}
-                                />
-                            </Item.Content>
+                                <Card>
+                                    <Card.Content>
+                                        <Card.Header>{player.name}</Card.Header>
+                                        <Card.Meta>{player.position}</Card.Meta>
+                                        <Card.Description>
+                                            <p>Голы: {player.goals}</p>
+                                            <p>Ассисты: {player.assists}</p>
+                                        </Card.Description>
+                                    </Card.Content>
+                                    
                             {isAdmin ? (
-                    <>
-                        <Button as={Link}
-                            to={`/managePlayer/${player.id}`}
-                            color='orange'
-                            floated='right'>
-                            Редактировать
-                        </Button>
-                        <Button
-                            name= {player.id}
-                            loading={loading && target === player.id}
-                            onClick={(e)=>handlePlayerDelete(e,player.id)}
-                            floated='right'
-                            color='red'
-                            content='Удалить'
-                        />
-                    </>
-                ) : <></>}
+                                <>
+                                    <Button as={Link}
+                                        to={`/managePlayer/${player.id}`}
+                                        color='orange'
+                                        floated='right'>
+                                        Редактировать
+                                    </Button>
+                                    <Button
+                                        name={player.id}
+                                        loading={loading && target === player.id}
+                                        onClick={(e) => handlePlayerDelete(e, player.id)}
+                                        floated='right'
+                                        color='red'
+                                        content='Удалить'
+                                    />
+                                </>
+                            ) : <></>}
+                                </Card>
+                            </Item.Content>
                         </Item>
                     </Item.Group>
                 </Segment>

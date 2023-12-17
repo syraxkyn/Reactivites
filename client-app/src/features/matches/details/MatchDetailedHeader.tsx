@@ -26,11 +26,11 @@ interface Props {
 }
 
 export default observer(function MatchDetailedHeader({ match }: Props) {
-    const { matchStore: { loading,deleteMatch } } = useStore();
+    const { matchStore: { loading, deleteMatch } } = useStore();
     const { userStore: { isAdmin }, matchStore } = useStore();
     const navigate = useNavigate()
 
-    const[target, setTarget] = useState('');
+    const [target, setTarget] = useState('');
 
     function handleMatchDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
         setTarget(e.currentTarget.name);
@@ -47,7 +47,7 @@ export default observer(function MatchDetailedHeader({ match }: Props) {
                             <Item.Content>
                                 <Header
                                     size='huge'
-                                    content={match.id}
+                                    content={match.firstTeamName + ':' + match.secondTeamName}
                                 />
                                 <br />
                                 <span>
@@ -63,7 +63,7 @@ export default observer(function MatchDetailedHeader({ match }: Props) {
                                     color='red'
                                     content='Удалить'
                                 />
-                            ):(null)}
+                            ) : (null)}
                         </Item>
                     </Item.Group>
                 </Segment>
