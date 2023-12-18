@@ -43,7 +43,6 @@ export default function TeamDetailedInfo({ team }: Props) {
     const { column, data, direction } = state
     return (
         <Segment.Group>
-            <Segment attached='top'>
                 <Table sortable celled fixed>
                     <Table.Header>
                         <Table.Row>
@@ -78,7 +77,6 @@ export default function TeamDetailedInfo({ team }: Props) {
                         ))}
                     </Table.Body>
                 </Table>
-            </Segment>
         </Segment.Group>
     )
 }

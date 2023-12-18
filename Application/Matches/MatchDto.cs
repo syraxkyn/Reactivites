@@ -13,5 +13,6 @@ namespace Application.Matches
         public string SecondTeamName { get; set; }
         public int GoalsScoredFirstTeam { get; set; }
         public int GoalsScoredSecondTeam { get; set; }
+        public bool Ended{get;set;}
     }
 }

@@ -19,8 +19,6 @@ export default observer(function MatchDetails() {
   }, [id, loadMatch])
 
   if (loadingInitial || !match ) return <LoadingComponent />;
-  console.log(match)
-  console.log('asdasd')
   return (
     <Grid>
       <Grid.Column width={10}>

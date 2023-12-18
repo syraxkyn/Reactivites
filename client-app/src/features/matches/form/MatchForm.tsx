@@ -15,7 +15,7 @@ import MyTextInput from '../../../app/common/form/MyTextInput';
 export default observer(function MatchForm() {
     const { matchStore, teamStore } = useStore();
     const { selectedMatch, createMatch, updateMatch,
-        loading, loadMatch, loadingInitial } = matchStore;
+        loading, loadMatch, loadMatches, loadingInitial } = matchStore;
     const { loadTeams, teamRegistry, teams } = teamStore;
     let teamOptions: { text: string; value: string; }[]
     const { id } = useParams();
@@ -30,8 +30,8 @@ export default observer(function MatchForm() {
     })
 
     const validationSchemeForUpdating = Yup.object({
-        goalsScoredFirstTeam: Yup.number().required('Необходимо ввести голы').min(0, 'Значение не может быть отрицательным'),
-        goalsScoredSecondTeam: Yup.number().required('Необходимо ввести голевые передачи').min(0, 'Значение не может быть отрицательным')
+        goalsScoredFirstTeam: Yup.number().required('Необходимо ввести голы первой команды').min(0, 'Значение не может быть отрицательным'),
+        goalsScoredSecondTeam: Yup.number().required('Необходимо ввести голы второй команды').min(0, 'Значение не может быть отрицательным')
     })
 
     useEffect(() => {
@@ -43,15 +43,11 @@ export default observer(function MatchForm() {
 
     function handleFormSubmit(match: MatchFormValues) {
         if (!match.id) {
-            console.log('match!!')
-            console.log(match)
             let newMatch = {
                 ...match,
-                firstTeamName: 'okay',
-                secondTeamName: 'okay',
                 id: uuid()
             };
-            createMatch(newMatch).then(() => navigate(`/matches`))
+            createMatch(newMatch).then(() => loadMatches()).then(() => navigate(`/matches`))
         }
         else {
             updateMatch(match).then(() => navigate(`/matches/${match.id}`))

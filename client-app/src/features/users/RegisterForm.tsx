@@ -14,10 +14,10 @@ export default observer(function RegisterForm() {
             onSubmit={(values, { setErrors }) => userStore.register(values).catch(error =>
                 setErrors({ error }))}
             validationSchema={Yup.object({
-                displayName: Yup.string().required(),
-                username: Yup.string().required(),
-                email: Yup.string().required(),
-                password: Yup.string().required()
+                displayName: Yup.string().required('Необходимо ввести отображаемое имя'),
+                username: Yup.string().required('Необходимо ввести имя'),
+                email: Yup.string().required('Необходимо ввести почту'),
+                password: Yup.string().required('Необходимо ввести пароль')
 
             })}
         >
@@ -35,7 +35,7 @@ export default observer(function RegisterForm() {
                     <Button
                         disabled={!isValid || !dirty || isSubmitting}
                         loading={isSubmitting} positive
-                        content='Register' type='submit' fluid />
+                        content='Регистрация' type='submit' fluid />
                 </Form>
             )}
         </Formik>

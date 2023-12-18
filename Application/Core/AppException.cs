@@ -8,7 +8,6 @@ namespace Application.Core
             this.StatusCode = statusCode;
             this.Message = message;
             this.Details = details;
-
         }
         public int StatusCode { get; set; }
         public string Message { get; set; }

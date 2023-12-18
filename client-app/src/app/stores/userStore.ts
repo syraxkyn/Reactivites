@@ -25,6 +25,7 @@ export default class UserStore {
             const user = await agent.Account.login(creds);
             store.commonStore.setToken(user.token);
             runInAction(() => this.user = user);
+            await store.postStore.loadPosts();
             router.navigate('/posts');
             store.modalStore.closeModal();
             console.log('asdas')

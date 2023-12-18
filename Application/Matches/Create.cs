@@ -39,7 +39,7 @@ namespace Application.Matches
                 _context.Matches.Add(request.Match);
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if (!result) return Result<Unit>.Failure("Failed to create match");
+                if (!result) return Result<Unit>.Failure("Ошибка при создании матча");
 
                 return Result<Unit>.Success(Unit.Value);
 

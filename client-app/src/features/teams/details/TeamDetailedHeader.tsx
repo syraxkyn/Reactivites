@@ -62,8 +62,6 @@ export default observer(function TeamDetailedHeader({ team }: Props) {
                     </Item.Group>
                 </Segment>
             </Segment>
-            <Segment clearing attached='bottom'>
-            </Segment>
         </Segment.Group>
     )
 })

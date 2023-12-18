@@ -55,30 +55,27 @@ export default observer(function MatchDetailedHeader({ match }: Props) {
                                 </span>
                             </Item.Content>
                             {isAdmin ? (
-                                <Button
-                                    name={match.id}
-                                    loading={loading && target === match.id}
-                                    onClick={(e) => handleMatchDelete(e, match.id)}
-                                    floated='right'
-                                    color='red'
-                                    content='Удалить'
-                                />
+                                <>
+                                    <Button as={Link}
+                                        to={`/manageMatch/${match.id}`}
+                                        floated='right'
+                                        color='orange'
+                                        content='Редактировать'
+                                        >
+                                    </Button>
+                                    <Button
+                                        name={match.id}
+                                        loading={loading && target === match.id}
+                                        onClick={(e) => handleMatchDelete(e, match.id)}
+                                        floated='right'
+                                        color='red'
+                                        content='Удалить'
+                                    />
+                                </>
                             ) : (null)}
                         </Item>
                     </Item.Group>
                 </Segment>
-            </Segment>
-            <Segment clearing attached='bottom'>
-                {/* {post.isHost ? (
-                    <>
-                        <Button as={Link}
-                            to={`/manage/${post.id}`}
-                            color='orange'
-                            floated='right'>
-                            Edit Post
-                        </Button>
-                    </>
-                ) : <></>} */}
             </Segment>
         </Segment.Group>
     )

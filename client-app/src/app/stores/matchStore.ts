@@ -13,21 +13,7 @@ export default class MatchStore {
     constructor() {
         makeAutoObservable(this);
     }
-
-    // get matchesByDate() {
-    //     return Array.from(this.matchRegistry.values())
-    // }
-
-    // get groupedMatches() {
-    //     return Object.entries(
-    //         this.matchesByDate.reduce((matches, match) => {
-    //             const date = format(match.date!, 'dd MMM yyyy')
-    //             matches[date] = matches[date] ? [...matches[date], match] : [match];
-    //             return matches;
-    //         }, {} as { [key: string]: Match[] })
-    //     )
-    // }
-
+    
     get matches() {
         return Array.from(this.matchRegistry.values());
     }

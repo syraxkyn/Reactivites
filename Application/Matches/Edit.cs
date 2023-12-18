@@ -69,11 +69,11 @@ namespace Application.Matches
 
                     var result = await _context.SaveChangesAsync() > 0;
 
-                    if (!result) return Result<Unit>.Failure("Failed to update match");
+                    if (!result) return Result<Unit>.Failure("Ошибка при обновлении матча");
                 }
                 else
                 {
-                    return Result<Unit>.Failure("Match is already ended");
+                    return Result<Unit>.Failure("Матч уже закончился");
                 }
 
                 return Result<Unit>.Success(Unit.Value);

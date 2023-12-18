@@ -39,8 +39,6 @@ axios.interceptors.response.use(async response => {
     console.log(status)
     switch (status) {
         case 400:
-            console.log(data)
-            toast.error(data)
             if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
                 router.navigate('/not-found');
             }
@@ -57,14 +55,14 @@ axios.interceptors.response.use(async response => {
             }
             break;
         case 401:
-            toast.error('unauthorized');
+            toast.error('Вы не авторизированы');
             break;
         case 403:
-            toast.error('forbidden');
+            toast.error('Запрещено');
             break;
         case 404:
             router.navigate('/not-found')
-            toast.error('not found');
+            toast.error('Не найдено');
             break;
         case 500:
             store.commonStore.setServerError(data);

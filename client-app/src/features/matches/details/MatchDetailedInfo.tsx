@@ -8,19 +8,23 @@ interface Props {
 }
 
 export default observer(function MatchDetailedInfo({ match }: Props) {
-console.log(match.firstTeamName)
 
     return (
         <Segment.Group>
             <Segment attached='top'>
                 <Grid>
                     <Container text>
-                        <Segment raised>
-                            <Header as='h2'>Матч</Header>
-                            <Divider />
-                            <p>Команда 1: {match.firstTeamName}</p>
-                            <p>Команда 2: {match.secondTeamName}</p>
-                        </Segment>
+                        {match.ended ? (
+                            <div style={{ textAlign: 'center' }}>
+                                <h1>Итоговый счёт</h1>
+                                <h1>{match.goalsScoredFirstTeam} - {match.goalsScoredSecondTeam}</h1>
+                            </div>
+                        ):(
+                            <div style={{ textAlign: 'center' }}>
+                                <h1>Матч не окончен</h1>
+                            </div>
+                        )
+                    }
                     </Container>
                     {/* <Grid.Column width={1}>
                         <Icon size='large' color='teal' name='info' />

@@ -18,21 +18,21 @@ export default observer(function TeamDetailedSidebar({ team }: Props) {
                 attached='top'
                 secondary
                 inverted
-                color='teal'
+                color='blue'
             >
             </Segment>
             <Segment attached>
                 <List relaxed divided>
                     <Item style={{ position: 'relative' }}>
                         <Item.Content verticalAlign='middle'>
-                            <Item.Extra as='h1' style={{ color: 'orange' }}>Best goalscorer</Item.Extra>
+                            <Item.Extra as='h1' style={{ color: 'orange' }}>Лучший бомбардир</Item.Extra>
                             <Item.Header as='h1'>
                                 {/* <Link to={`/profiles/${attendee.username}`}>{attendee.displayName}</Link> */}
                                 <Link to={`/players/${team.bestGoalScorer?.id}`}>{team.bestGoalScorer?.name}: {team.bestGoalScorer?.goals}</Link>
                             </Item.Header>
                         </Item.Content>
                         <Item.Content verticalAlign='middle'>
-                            <Item.Extra as='h1' style={{ color: 'orange' }}>Best assistant</Item.Extra>
+                            <Item.Extra as='h1' style={{ color: 'orange' }}>Лучший ассистент</Item.Extra>
                             <Item.Header as='h1'>
                                 {/* <Link to={`/profiles/${attendee.username}`}>{attendee.displayName}</Link> */}
                                 <Link to={`/players/${team.bestAssistant?.id}`}>{team.bestAssistant?.name}: {team.bestAssistant?.assists}</Link>

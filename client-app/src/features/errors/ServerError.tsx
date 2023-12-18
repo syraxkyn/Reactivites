@@ -6,7 +6,7 @@ export default observer(function ServerError(){
     const {commonStore} = useStore();
     return (
         <Container>
-            <Header as='h1' content='Server Error'/>
+            <Header as='h1' content='Серверная ошибка'/>
             <Header sub as='h5' color="red" content={commonStore.error?.message}/>
             {commonStore.error?.details && (
                 <Segment>

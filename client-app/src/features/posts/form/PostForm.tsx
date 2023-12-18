@@ -13,8 +13,8 @@ import MyTextArea from '../../../app/common/form/MyTextArea';
 
 export default observer(function PostForm() {
     const { postStore } = useStore();
-    const { selectedPost, createPost, updatePost,
-        loading, loadPost, loadingInitial } = postStore;
+    const { createPost, updatePost,
+        loadPost, loadingInitial } = postStore;
     const { id } = useParams();
     const navigate = useNavigate()
 
@@ -23,7 +23,6 @@ export default observer(function PostForm() {
     const validationScheme = Yup.object({
         title: Yup.string().trim().required('Необходимо ввести заголовок новости'),
         text: Yup.string().trim().required('Необходимо ввести текст новости'),
-        // date: Yup.string().required()
     })
 
     useEffect(() => {

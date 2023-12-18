@@ -5,6 +5,7 @@ import { useStore } from '../../../app/stores/store';
 import { format } from 'date-fns';
 import { Post } from '../../../app/models/post';
 import { Match } from '../../../app/models/match';
+import { ru } from 'date-fns/locale';
 
 interface Props {
     match: Match
@@ -13,12 +14,9 @@ interface Props {
 export default function MatchListItem({ match }: Props) {
 
     const { matchStore } = useStore();
-    const { deleteMatch, loading } = matchStore;
     const [target, setTarget] = useState('');
-    function handlePostDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
-        setTarget(e.currentTarget.name);
-        deleteMatch(id);
-    }
+    console.log(match.ended)
+    console.log(match)
     return (
         <Segment.Group>
             <Segment>
@@ -28,13 +26,20 @@ export default function MatchListItem({ match }: Props) {
                             <Item.Header as={Link} to={`/matches/${match.id}`}>
                                 {match.firstTeamName} - {match.secondTeamName}
                             </Item.Header>
+                            {match.ended && (
+                                <Item.Description>
+                                    <Label basic color='orange'>
+                                        Матч завершен
+                                    </Label>
+                                </Item.Description>
+                            )}
                         </Item.Content>
                     </Item>
                 </Item.Group>
             </Segment>
             <Segment clearing>
                 <span>
-                    <Icon name='clock' /> {format(match.date!, 'dd MMM yyyy h:mm aa')}
+                    <Icon name='clock' /> {format(match.date!, 'dd MMM yyyy h:mm aa', { locale: ru })}
                 </span>
                 <Button
                     as={Link}

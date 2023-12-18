@@ -6,11 +6,11 @@ export default function NotFound(){
         <Segment placeholder>
             <Header icon>
                 <Icon name='search'/>
-                Oops we could not find
+                Упс... не найдено
             </Header>
             <Segment.Inline>
                 <Button as={Link} to='/posts'>
-                    Return to news page
+                    Вернуться на страницу новостей
                 </Button>
             </Segment.Inline>
         </Segment>
