@@ -46,7 +46,6 @@ namespace API.Extensions
            services.AddValidatorsFromAssemblyContaining<Create>();
            services.AddHttpContextAccessor();
            services.AddScoped<IUserAccessor,UserAccessor>();
-           //Оставить для фото
            services.AddSignalR();
 
            return services;

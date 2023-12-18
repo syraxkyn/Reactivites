@@ -86,9 +86,9 @@ export default observer(function MatchForm() {
                                 loading={isSubmitting}
                                 floated='right'
                                 positive type='submit'
-                                content='Submit'
+                                content='Создать'
                             />
-                            <Button as={Link} to='/matches' floated='right' type='button' content='Cancel' />
+                            <Button as={Link} to='/matches' floated='right' type='button' content='Отмена' />
                         </Form>
                     )}
                 </Formik>

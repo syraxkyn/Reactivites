@@ -90,7 +90,7 @@ export default observer(function PostDetailedChat({ postId }: Props) {
                         </Form>
                     )}
                 </Formik>
-                <Comment.Group>
+                <Comment.Group style={{ maxHeight: '400px', overflowY: 'auto' }}>
                     {commentStore.comments.map(comment => (
                         <Comment key={comment.id}>
                             <Comment.Avatar src='/assets/user.png' />

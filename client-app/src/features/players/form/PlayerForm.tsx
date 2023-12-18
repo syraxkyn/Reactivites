@@ -30,8 +30,8 @@ export default observer(function PlayerForm() {
 
     const validationSchemeForUpdating = Yup.object({
         name: Yup.string().trim().required('Необходимо ввести имя'),
-        goals: Yup.number().required('Необходимо ввести голы'),
-        assists: Yup.number().required('Необходимо ввести голевые передачи')
+        goals: Yup.number().required('Необходимо ввести голы').min(0, 'Значение не может быть отрицательным'),
+        assists: Yup.number().required('Необходимо ввести голевые передачи').min(0, 'Значение не может быть отрицательным')
     })
 
     useEffect(() => {
@@ -76,9 +76,9 @@ export default observer(function PlayerForm() {
                                 loading={isSubmitting}
                                 floated='right'
                                 positive type='submit'
-                                content='Submit'
+                                content='Создать'
                             />
-                            <Button as={Link} to='/players' floated='right' type='button' content='Cancel' />
+                            <Button as={Link} to='/players' floated='right' type='button' content='Отмена' />
                         </Form>
                     )}
                 </Formik>
@@ -101,7 +101,7 @@ export default observer(function PlayerForm() {
                                 positive type='submit'
                                 content='Изменить'
                             />
-                            <Button as={Link} to='/players' floated='right' type='button' content='Отменить' />
+                            <Button as={Link} to='/players' floated='right' type='button' content='Отмена' />
                         </Form>
                     )}
                 </Formik>

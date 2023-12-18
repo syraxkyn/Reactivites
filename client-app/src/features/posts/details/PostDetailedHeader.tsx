@@ -37,9 +37,6 @@ export default observer(function PostDetailedHeader({ post }: Props) {
                                     size='huge'
                                     content={post.title}
                                 />
-                                <span>
-                                    {format(post.date!, 'dd MMM yyyy h:mm aa')}
-                                </span>
                                 {post.isHost ? (
                                     <>
                                         <Button as={Link}

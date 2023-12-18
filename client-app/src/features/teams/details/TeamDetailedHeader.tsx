@@ -23,12 +23,13 @@ interface Props {
 }
 
 export default observer(function TeamDetailedHeader({ team }: Props) {
-    const { teamStore } = useStore();
+    const { teamStore, playerStore } = useStore();
     const { userStore: { isAdmin } } = useStore();
     const { deleteTeam, loading } = teamStore;
+    const { loadPlayers } = playerStore;
     const navigate = useNavigate()
 
-    const[target, setTarget] = useState('');
+    const [target, setTarget] = useState('');
 
     function handleTeamDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
         setTarget(e.currentTarget.name);
@@ -47,15 +48,15 @@ export default observer(function TeamDetailedHeader({ team }: Props) {
                                     content={team.name}
                                 />
                                 {isAdmin ? (
-                                <Button
-                                    name={team.id}
-                                    loading={loading && target === team.id}
-                                    onClick={(e) => handleTeamDelete(e, team.id)}
-                                    floated='right'
-                                    color='red'
-                                    content='Удалить'
-                                />
-                            ):(null)}
+                                    <Button
+                                        name={team.id}
+                                        loading={loading && target === team.id}
+                                        onClick={(e) => handleTeamDelete(e, team.id)}
+                                        floated='right'
+                                        color='red'
+                                        content='Удалить'
+                                    />
+                                ) : (null)}
                             </Item.Content>
                         </Item>
                     </Item.Group>

@@ -1,10 +1,7 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { Team, TeamFormValues } from "../models/team";
 import agent from "../api/agent";
-import { v4 as uuid } from 'uuid';
-import { format } from 'date-fns'
 import { store } from "./store";
-import { Profile } from "../models/profile";
 
 export default class TeamStore {
     teamRegistry = new Map<string, Team>();
@@ -130,6 +127,7 @@ export default class TeamStore {
         this.loading = true;
         try {
             await agent.Teams.delete(id);
+            await store.playerStore.loadPlayers();
             runInAction(() => {
                 this.teamRegistry.delete(id);
                 this.loading = false;

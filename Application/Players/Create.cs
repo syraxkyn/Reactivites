@@ -39,6 +39,7 @@ namespace Application.Players
             {
                 bool player = await _context.Players.AnyAsync(x => x.Name == request.Player.Name && x.Team.Id == request.Player.TeamId);
                 if (player) return Result<Unit>.Failure("Player already exists");
+
                 _context.Players.Add(request.Player);
                 var result = await _context.SaveChangesAsync() > 0;
 
